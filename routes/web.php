@@ -67,16 +67,22 @@ Route::get('/utilities-other', function () {
     return view('utilities-other');
 });
 
+Route::resource('/pejabat', 'PejabatController');
+// Route::resource('/pengajuan', 'PengajuanController');
+
 Route::resource('/barang', 'BarangController');
 Route::resource('/nota', 'NotaController');
 // Route::get('/detailnota/{id}', 'NotaController@detailnota')->name('detail.nota.edit');
 
-Route::prefix('bidang')->name('bidang.')->group(function () {
-    Route::resource('/permintaan', 'BPermintaanController');
-    Route::resource('/peminjaman', 'BPeminjamanController');
-});
+// Route::prefix('bidang')->name('bidang.')->group(function () {
+//     Route::resource('/permintaan', 'BPermintaanController');
+//     Route::resource('/peminjaman', 'BPeminjamanController');
+// });
 
-Route::prefix('sekretaris')->name('sekretaris.')->group(function () {
-    Route::resource('/permintaan', 'SPermintaanController');
-    Route::resource('/peminjaman', 'SPeminjamanController');
-});
+// Route::prefix('sekretaris')->name('sekretaris.')->group(function () {
+//     Route::resource('/permintaan', 'SPermintaanController');
+//     Route::resource('/peminjaman', 'SPeminjamanController');
+// });
+
+Route::get('/shb', 'SHBController@index')->name('shb.index');
+Route::post('/shb/import_excel', 'SHBController@import_excel')->name('shb.import');

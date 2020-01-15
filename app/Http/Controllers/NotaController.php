@@ -17,9 +17,8 @@ class NotaController extends Controller
      */
     public function index()
     {
-        $barangs = Barang::all();
         $notas = Nota::all();
-        return view('nota', compact('notas', 'barangs'));
+        return view('nota.index', compact('notas'));
     }
 
     /**
@@ -29,7 +28,7 @@ class NotaController extends Controller
      */
     public function create()
     {
-        //
+        return view('nota.create');
     }
 
     /**

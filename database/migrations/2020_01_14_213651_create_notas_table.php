@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateNotasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('notas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('pejabat_id');
-            $table->string('username')->unique();
-            $table->string('password');
+            $table->string('no_nota')->unique();
+            $table->string('pihak_ketiga');
+            $table->string('nama_perwakilan');
+            $table->string('jabatan_perwakilan');
+            $table->string('program');
+            $table->mediumText('kegiatan');
+            $table->string('penanda_tangan');
             $table->string('status');
-            $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('pejabat_id')->references('id')->on('pejabat_barangs');
         });
     }
 
@@ -33,6 +34,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('notas');
     }
 }

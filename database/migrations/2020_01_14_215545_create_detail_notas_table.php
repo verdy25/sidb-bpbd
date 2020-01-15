@@ -15,14 +15,14 @@ class CreateDetailNotasTable extends Migration
     {
         Schema::create('detail_notas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_nota');
-            $table->unsignedBigInteger('id_barang');
-            $table->integer('jumlah');
-            $table->float('harga');
+            $table->unsignedBigInteger('nota_id');
+            $table->unsignedBigInteger('barang_id');
+            $table->integer('volume');
+            $table->integer('harga');
             $table->timestamps();
 
-            $table->foreign('id_nota')->references('id')->on('nota');
-            $table->foreign('id_barang')->references('id')->on('barang');
+            $table->foreign('nota_id')->references('id')->on('notas');
+            $table->foreign('barang_id')->references('id')->on('barangs');
         });
     }
 
