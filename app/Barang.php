@@ -12,4 +12,9 @@ class Barang extends Model
     {
         return $this->hasMany('App\DetailNota', 'kode_barang');
     }
+    public function detailpermintaan()
+    {
+        return $this->hasMany('App\DetailPermintaan', 'id_permintaan');
+    }
+
 }

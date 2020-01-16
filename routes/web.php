@@ -85,6 +85,10 @@ Route::get('/nota/cetak/{id}', 'NotaController@cetak')->name('cetak.pengajuan');
 //     Route::resource('/peminjaman', 'SPeminjamanController');
 // });
 
+Route::resource('/permintaan', 'PermintaanController');
+
+
+
 Route::prefix('shb')->name('shb.')->group(function () {
     Route::get('/', 'SHBController@index')->name('index');
     Route::post('/import_excel', 'SHBController@import_excel')->name('import');

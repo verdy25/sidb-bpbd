@@ -150,7 +150,7 @@
       <span>Nota</span></a>
   </li>
 
-  {{-- <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePermintaan" aria-expanded="true"
       aria-controls="collapsePermintaan">
       <i class="fas fa-fw fa-folder"></i>
@@ -159,15 +159,14 @@
     <div id="collapsePermintaan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Bidang:</h6>
-        <a class="collapse-item" href="{{route('bidang.permintaan.index')}}">Permintaan</a>
-        <a class="collapse-item" href="{{route('bidang.peminjaman.index')}}">Perminjaman</a>
+        
         <div class="collapse-divider"></div>
         <h6 class="collapse-header">Sekretaris:</h6>
-        <a class="collapse-item" href="{{route('sekretaris.permintaan.index')}}">Permintaan</a>
-        <a class="collapse-item" href="{{route('sekretaris.peminjaman.index')}}">Perminjaman</a>
+        <a class="collapse-item" href="{{route('permintaan.index')}}">Permintaan</a>
+
       </div>
     </div>
-  </li> --}}
+  </li> 
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

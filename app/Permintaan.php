@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Permintaan extends Model
 {
     protected $guarded = [];
+    protected $table = 'permintaan';
     public function barang(){
         return $this->belongsTo('App\Barang', 'id_barang');
     }
