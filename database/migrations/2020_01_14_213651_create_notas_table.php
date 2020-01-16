@@ -20,7 +20,7 @@ class CreateNotasTable extends Migration
             $table->string('nama_perwakilan');
             $table->string('jabatan_perwakilan');
             $table->string('program');
-            $table->mediumText('kegiatan');
+            $table->mediumText('kegiatan')->nullable();
             $table->string('penanda_tangan');
             $table->string('status');
             $table->timestamps();

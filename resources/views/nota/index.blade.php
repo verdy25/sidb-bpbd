@@ -45,9 +45,9 @@
             @foreach ($notas as $nota)
             <tr>
               <td>{{date('d F Y', strtotime($nota->created_at))}}</td>
-              <td><button class="btn btn-primary btn-sm" data-target="#pihak_ketiga"
-                  data-toggle="modal">{{$nota->pihak_ketiga}}
-                  Nota</button></td>
+              <td>{{$nota->no_nota}}</td>
+              <td><a href="" data-target="#pihak_ketiga" data-toggle="modal">{{$nota->pihak_ketiga}}
+                </a></td>
               <td>{{$nota->program}}</td>
               <td>{{$nota->kegiatan}}</td>
               <td>{{$nota->penanda_tangan}}</td>
@@ -67,14 +67,14 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                           <label for="nama_perwakilan">Nama</label>
                           <input type="text" class="form-control" id="nama_perwakilan"
-                            value="{{$nota->nama_perwakilan}}">
+                            value="{{$nota->nama_perwakilan}}" readonly>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-6">
                           <label for="jabatan">Jabatan</label>
-                          <input type="text" class="form-control" id="jabatan" value="{{$nota->jabatan_perwakilan}}">
+                          <input type="text" class="form-control" readonly id="jabatan" value="{{$nota->jabatan_perwakilan}}">
                         </div>
                       </div>
                     </div>

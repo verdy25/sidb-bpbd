@@ -16,13 +16,12 @@ class CreateDetailNotasTable extends Migration
         Schema::create('detail_notas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('nota_id');
-            $table->unsignedBigInteger('barang_id');
+            $table->string('kode_barang');
             $table->integer('volume');
             $table->integer('harga');
             $table->timestamps();
 
             $table->foreign('nota_id')->references('id')->on('notas');
-            $table->foreign('barang_id')->references('id')->on('barangs');
         });
     }
 

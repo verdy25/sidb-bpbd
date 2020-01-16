@@ -18,6 +18,7 @@ class CreateShbelanjaTable extends Migration
             $table->string('kode_barang')->nullable();
             $table->string('nama_barang')->nullable();
             $table->mediumText('spesifikasi')->nullable();
+            $table->string('merk')->nullable();
             $table->string('satuan')->nullable();
             $table->integer('harga')->nullable();
             $table->timestamps();

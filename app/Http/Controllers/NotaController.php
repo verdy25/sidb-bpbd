@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Barang;
 use App\DetailNota;
 use App\Nota;
+use App\SHBelanja;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PDF;
 
 class NotaController extends Controller
 {
@@ -28,7 +30,8 @@ class NotaController extends Controller
      */
     public function create()
     {
-        return view('nota.create');
+        $shb = SHBelanja::all();
+        return view('nota.create', compact('shb'));
     }
 
     /**
@@ -44,39 +47,96 @@ class NotaController extends Controller
         //     'nota' => 'nullable|unique:nota,nota'
         // ]);
 
-        dd($request->dynamic_form);
-        $form = $request->dynamic_form['dynamic_form'];
-        foreach ($form as $key => $value) {
-            $request->validate([
-                "dynamic_form[dynamic_form][$key][jumlah]" => 'required|numeric|min:0',
-                "dynamic_form[dynamic_form][$key][barang]" => 'required',
-                "dynamic_form[dynamic_form][$key][harga]" => 'required|numeric|min:0',
-            ]); 
+        // $form = $request->dynamic_form['dynamic_form'];
+        // foreach ($form as $key => $value) {
+        //     $request->validate([
+        //         "dynamic_form[dynamic_form][$key][jumlah]" => 'required|numeric|min:0',
+        //         "dynamic_form[dynamic_form][$key][barang]" => 'required',
+        //         "dynamic_form[dynamic_form][$key][harga]" => 'required|numeric|min:0',
+        //     ]); 
+        // }
+
+        // if ($request->nota == null) {
+        //     Nota::create([
+        //         'created_at' => $request->tanggal,
+        //         'nota' => Nota::get()->last()->id + 1
+        //     ]);
+        // } else {
+        //     Nota::create([
+        //         'created_at' => $request->tanggal,
+        //         'nota' => $request->nota
+        //     ]);
+        // }
+
+        // foreach ($form as $key => $value) {
+        //     DetailNota::create([
+        //         'id_barang' => $form[$key]['barang'],
+        //         'jumlah' => $request->dynamic_form['dynamic_form'][$key]['jumlah'],
+        //         'harga' => $request->dynamic_form['dynamic_form'][$key]['harga'],
+        //         'id_nota' => Nota::get()->last()->id
+        //     ]);
+
+        //     $barang = Barang::find($form[$key]['barang']);
+        //     Barang::where('id', $form[$key]['barang'])->update([
+        //         'stok' => $barang->stok + $request->dynamic_form['dynamic_form'][$key]['jumlah']
+        //     ]);
+        // }
+
+        $request->validate([
+            'no_nota' => 'required',
+            'pihak_ketiga' => 'required',
+            'nama_perwakilan' => 'required',
+            'jabatan_perwakilan' => 'required',
+            'program' => 'required',
+            'kegiatan' => 'nullable',
+            'penanda_tangan' => 'required',
+            'tanggal' => 'required',
+            'barang' => 'required',
+            'volume' => 'required',
+            'harga' => 'required'
+        ]);
+
+        Nota::create([
+            'no_nota' => $request->no_nota,
+            'pihak_ketiga' => $request->pihak_ketiga,
+            'nama_perwakilan' => $request->nama_perwakilan,
+            'jabatan_perwakilan' => $request->jabatan_perwakilan,
+            'program' => $request->program,
+            'kegiatan' => $request->kegiatan,
+            'penanda_tangan' => $request->penanda_tangan,
+            'created_at' => $request->tanggal,
+            'status' => 'Belum disahkan'
+        ]);
+
+        $form = $request->volume;
+        for ($i = 0; $i < count($form) - 1; $i++) {
+            $s = SHBelanja::find($request->barang[$i]);
+            $barang = Barang::where('kode', $s->kode_barang)->first();
+            if ($barang == null) {
+                Barang::create([
+                    'kode' => $s->kode_barang,
+                    'nama' => $s->nama_barang,
+                    'spesifikasi' => $s->spesifikasi,
+                    'satuan' => $s->satuan,
+                    'stok' => 0
+                ]);
+            } else { }
         }
 
-        if ($request->nota == null) {
-            Nota::create([
-                'created_at' => $request->tanggal,
-                'nota' => Nota::get()->last()->id + 1
-            ]);
-        } else {
-            Nota::create([
-                'created_at' => $request->tanggal,
-                'nota' => $request->nota
-            ]);
-        }
-
-        foreach ($form as $key => $value) {
+        for ($i = 0; $i < count($form) - 1; $i++) {
+            $s = SHBelanja::find($request->barang[$i]);
+            $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
+            $harga = preg_replace('/[^\d]/', '', $request->harga[$i]);
             DetailNota::create([
-                'id_barang' => $form[$key]['barang'],
-                'jumlah' => $request->dynamic_form['dynamic_form'][$key]['jumlah'],
-                'harga' => $request->dynamic_form['dynamic_form'][$key]['harga'],
-                'id_nota' => Nota::get()->last()->id
+                'nota_id' =>  Nota::get()->last()->id,
+                'kode_barang' => $s->kode_barang,
+                'volume' => $volume,
+                'harga' => $harga
             ]);
 
-            $barang = Barang::find($form[$key]['barang']);
-            Barang::where('id', $form[$key]['barang'])->update([
-                'stok' => $barang->stok + $request->dynamic_form['dynamic_form'][$key]['jumlah']
+            $barang = Barang::where('kode', $s->kode_barang)->first();
+            $barang->update([
+                'stok' => $barang->stok + $volume,
             ]);
         }
 
@@ -92,12 +152,14 @@ class NotaController extends Controller
     public function show($id)
     {
         $nota = Nota::findOrFail($id);
-        $details = DetailNota::where('id_nota', $id)->get();
+        $details = DetailNota::where('nota_id', $id)->get();
         $total = 0;
-        foreach ($details as $value) {
-            $total = $total + ($value->jumlah * $value->harga);
+        $jumlah = [];
+        foreach ($details as $key => $value) {
+            $jumlah[$key] = $value->volume * $value->harga;
+            $total = $total + ($value->volume * $value->harga);
         }
-        return view('detailnota', compact('details', 'nota', 'total'));
+        return view('nota.detail.index', compact('details', 'nota', 'total', 'jumlah'));
     }
 
     /**
@@ -134,9 +196,18 @@ class NotaController extends Controller
         //
     }
 
-    public function detailnota($id)
+    public function cetak($id)
     {
-        $nota = DetailNota::find($id);
-        return view('detailnotaedit', compact('nota'));
+        $nota = Nota::findOrFail($id);
+        $details = DetailNota::where('nota_id', $id)->get();
+        $total = 0;
+        $jumlah = [];
+        foreach ($details as $key => $value) {
+            $jumlah[$key] = $value->volume * $value->harga;
+            $total = $total + ($value->volume * $value->harga);
+        }
+
+        $pdf = PDF::loadview('prints.pengajuan', ['nota' => $nota, 'details' => $details, 'total' => $total, 'jumlah' => $jumlah]);
+        return $pdf->download('pengajuan-pdf');
     }
 }

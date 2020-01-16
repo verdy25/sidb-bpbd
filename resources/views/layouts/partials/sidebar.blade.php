@@ -111,16 +111,38 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="{{route('shb.index')}}">
-      <i class="fas fa-fw fa-table"></i>
-      <span>SHB</span></a>
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true"
+      aria-controls="collapsePages">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>SHB</span>
+    </a>
+    <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Bidang :</h6>
+        <a class="collapse-item" href="{{route('shb.index')}}">Semua</a>
+        <a class="collapse-item" href="{{route('shb.bahan')}}">Bahan</a>
+        <a class="collapse-item" href="{{route('shb.suku_cadang')}}">Suku Cadang</a>
+        <a class="collapse-item" href="{{route('shb.natura')}}">Natura dan Pakan</a>
+        <a class="collapse-item" href="{{route('shb.alat_besar')}}">Alat Besar</a>
+        <a class="collapse-item" href="{{route('shb.alat_angkutan')}}">Alat Angkutan</a>
+        <a class="collapse-item" href="{{route('shb.alat_bengkel')}}">Alat Bengkel dan Ukur</a>
+        <a class="collapse-item" href="{{route('shb.alat_kantor')}}">Alat Kantor dan RT</a>
+        <a class="collapse-item" href="{{route('shb.alat_studio')}}">Alat Studio</a>
+        <a class="collapse-item" href="{{route('shb.komputer')}}">Komputer</a>
+        <a class="collapse-item" href="{{route('shb.pertanian')}}">Pertanian & Kesehatan</a>
+        <a class="collapse-item" href="{{route('shb.obat')}}">Obat Obatan</a>
+        <a class="collapse-item" href="{{route('shb.buku')}}">Buku Perpus</a>
+        <a class="collapse-item" href="{{route('shb.honor')}}">Honor dan Jasa Pelayanan</a>
+        <a class="collapse-item" href="{{route('shb.biaya')}}">Biaya</a>
+      </div>
+    </div>
   </li>
 
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{route('barang.index')}}">
       <i class="fas fa-fw fa-table"></i>
       <span>Barang</span></a>
-  </li>
+  </li> --}}
 
   <li class="nav-item">
     <a class="nav-link" href="{{route('nota.index')}}">
