@@ -10,8 +10,4 @@ class Permintaan extends Model
     public function barang(){
         return $this->belongsTo('App\Barang', 'id_barang');
     }
-
-    public function user(){
-        return $this->belongsTo('App\User', 'id_user');
-    }
 }

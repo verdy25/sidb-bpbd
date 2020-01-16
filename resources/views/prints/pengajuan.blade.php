@@ -3,16 +3,16 @@
 
 <head>
     <title>Laporan</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
     <style type="text/css">
-        body{
-			font-size: 9pt;
-		}
+        body {
+            font-size: 9pt;
+        }
     </style>
-    <header style="margin-left: 70%">
+    <header style="margin-left: 60%; margin-top:1cm">
         <p>Banyuwangi, 04 Januari 2019<br />
             Kepada<br />
             Yth. Kepala Pelaksana BPBD Kab. Banyuwangi<br />
@@ -44,25 +44,23 @@
                 <td class="text-right">{{$jumlah[$key]}}</td>
             </tr>
             @endforeach
+            <tr>
+                <td class="text-right" colspan="6"><strong>Total</strong></td>
+                <td class="text-right">{{$total}}</td>
+            </tr>
         </tbody>
-        <tfoot>
-            <td class="text-right" colspan="6"><strong>Total</strong></td>
-            <td class="text-right">{{$total}}</td>
-        </tfoot>
     </table>
 
     <footer class="mx-5">
         <div class="row">
-            <div class="col">
+            <div class="col" style="margin-left: 5%;">
                 <p>Yang Menerima,<br />
                     Pengurus Barang Pengguna<br /><br /><br /><br><br>
                     WAWAN HERMANTO<br />
                     NIP. 1980101010 200901 1 025</p>
 
             </div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col">
+            <div class="col" style="margin-left: 65%;">
                 <p>Yang Menyerahkan,<br />
                     Nama CV<br /><br /><br /><br><br>
                     WAWAN HERMANTO<br />

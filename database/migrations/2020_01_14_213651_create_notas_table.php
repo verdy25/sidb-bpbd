@@ -21,9 +21,11 @@ class CreateNotasTable extends Migration
             $table->string('jabatan_perwakilan');
             $table->string('program');
             $table->mediumText('kegiatan')->nullable();
-            $table->string('penanda_tangan');
+            $table->unsignedBigInteger('penanda_tangan');
             $table->string('status');
             $table->timestamps();
+
+            $table->foreign('penanda_tangan')->references('id')->on('pejabat_barangs');
         });
     }
 

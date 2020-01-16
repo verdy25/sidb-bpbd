@@ -50,7 +50,7 @@
               <th>Harga</th>
             </tr>
           </thead>
-          <tbody>
+          {{-- <tbody>
             @foreach ($shb as $s)
             <tr>
               <td>{{$s->kode_barang}}</td>
@@ -60,7 +60,7 @@
               <td style="text-align:right">{{$s->harga}}</td>
             </tr>
             @endforeach
-          </tbody>
+          </tbody> --}}
         </table>
       </div>
     </div>
@@ -79,28 +79,28 @@
         </button>
       </div>
       <form action="{{route('barang.store')}}" method="POST">
-        @csrf
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="nip">NIP</label>
-            <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan NIP">
-          </div>
-          <div class="form-group">
-            <label for="nama">Nama</label>
-            <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan nama">
-          </div>
-          <div class="form-group">
-            <label for="jabatan">Jabatan</label>
-            <input type="text" name="jabatan" id="jabatan" class="form-control" placeholder="Masukkan jabatan">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
-        </div>
-      </form>
-    </div>
+@csrf
+<div class="modal-body">
+  <div class="form-group">
+    <label for="nip">NIP</label>
+    <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan NIP">
   </div>
+  <div class="form-group">
+    <label for="nama">Nama</label>
+    <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan nama">
+  </div>
+  <div class="form-group">
+    <label for="jabatan">Jabatan</label>
+    <input type="text" name="jabatan" id="jabatan" class="form-control" placeholder="Masukkan jabatan">
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+  <button type="submit" class="btn btn-primary">Simpan</button>
+</div>
+</form>
+</div>
+</div>
 </div> --}}
 
 <!-- Modal Import -->
@@ -126,4 +126,22 @@
     </form>
   </div>
 </div>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script>
+  $(function() {
+      $('#dataTable').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: '{!! route('shb.data') !!}',
+          columns: [
+              { data: 'kode_barang', name: 'kode_barang' },
+              { data: 'nama_barang', name: 'nama_barang' },
+              { data: 'spesifikasi', name: 'spesifikasi' },
+              { data: 'satuan', name: 'satuan' },
+              { data: 'harga', name: 'harga'}
+          ]
+      });
+  });
+</script>
 @endsection

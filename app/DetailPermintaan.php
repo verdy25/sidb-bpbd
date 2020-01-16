@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Peminjaman extends Model
+class DetailPermintaan extends Model
 {
     protected $guarded = [];
     public function barang(){
         return $this->belongsTo('App\Barang', 'id_barang');
     }
 
-    public function user(){
-        return $this->belongsTo('App\User', 'id_user');
+    public function permintaan(){
+        return $this->belongsTo('App\Permintaan', 'id_permintaan');
     }
 }

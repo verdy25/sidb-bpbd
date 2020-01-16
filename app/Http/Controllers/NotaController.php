@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Barang;
 use App\DetailNota;
 use App\Nota;
+use App\PejabatBarang;
 use App\SHBelanja;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class NotaController extends Controller
     public function create()
     {
         $shb = SHBelanja::all();
-        return view('nota.create', compact('shb'));
+        $pejabat = PejabatBarang::all();
+        return view('nota.create', compact('shb', 'pejabat'));
     }
 
     /**
@@ -42,45 +44,8 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'tanggal' => 'required',
-        //     'nota' => 'nullable|unique:nota,nota'
-        // ]);
 
-        // $form = $request->dynamic_form['dynamic_form'];
-        // foreach ($form as $key => $value) {
-        //     $request->validate([
-        //         "dynamic_form[dynamic_form][$key][jumlah]" => 'required|numeric|min:0',
-        //         "dynamic_form[dynamic_form][$key][barang]" => 'required',
-        //         "dynamic_form[dynamic_form][$key][harga]" => 'required|numeric|min:0',
-        //     ]); 
-        // }
-
-        // if ($request->nota == null) {
-        //     Nota::create([
-        //         'created_at' => $request->tanggal,
-        //         'nota' => Nota::get()->last()->id + 1
-        //     ]);
-        // } else {
-        //     Nota::create([
-        //         'created_at' => $request->tanggal,
-        //         'nota' => $request->nota
-        //     ]);
-        // }
-
-        // foreach ($form as $key => $value) {
-        //     DetailNota::create([
-        //         'id_barang' => $form[$key]['barang'],
-        //         'jumlah' => $request->dynamic_form['dynamic_form'][$key]['jumlah'],
-        //         'harga' => $request->dynamic_form['dynamic_form'][$key]['harga'],
-        //         'id_nota' => Nota::get()->last()->id
-        //     ]);
-
-        //     $barang = Barang::find($form[$key]['barang']);
-        //     Barang::where('id', $form[$key]['barang'])->update([
-        //         'stok' => $barang->stok + $request->dynamic_form['dynamic_form'][$key]['jumlah']
-        //     ]);
-        // }
+        dd($request->all());
 
         $request->validate([
             'no_nota' => 'required',
@@ -153,13 +118,14 @@ class NotaController extends Controller
     {
         $nota = Nota::findOrFail($id);
         $details = DetailNota::where('nota_id', $id)->get();
+        $pejabat = PejabatBarang::all();
         $total = 0;
         $jumlah = [];
         foreach ($details as $key => $value) {
             $jumlah[$key] = $value->volume * $value->harga;
             $total = $total + ($value->volume * $value->harga);
         }
-        return view('nota.detail.index', compact('details', 'nota', 'total', 'jumlah'));
+        return view('nota.detail.index', compact('details', 'nota', 'total', 'jumlah', 'pejabat'));
     }
 
     /**
@@ -180,9 +146,17 @@ class NotaController extends Controller
      * @param  \App\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Nota $nota)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'penerima' => 'required'
+        ]);
+
+        Nota::where('id', $id)->update([
+            'penanda_tangan' => $request->penerima
+        ]);
+
+        return back()->with('success', 'Penerima berhasil dirubah');
     }
 
     /**
@@ -208,6 +182,16 @@ class NotaController extends Controller
         }
 
         $pdf = PDF::loadview('prints.pengajuan', ['nota' => $nota, 'details' => $details, 'total' => $total, 'jumlah' => $jumlah]);
-        return $pdf->download('pengajuan-pdf');
+        return $pdf->stream("pengajuan.pdf", array("Attachment" => false));
+    }
+
+    public function loadDataSHB(Request $request)
+    {
+        $data = [];
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = SHBelanja::select('id', 'nama_barang')->where('nama_barang', 'LIKE', '%'.$cari.'%')->get();
+        }
+        return response()->json($data);
     }
 }

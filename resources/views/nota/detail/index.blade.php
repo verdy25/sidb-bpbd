@@ -3,14 +3,36 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- DataTales Example -->
+  @if ($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+  @endif
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Nota #{{$nota->id}} -
         {{date('d F Y', strtotime($nota->created_at))}}</h6>
-        <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $nota->id)}}"><i class="fas fa-print"></i>
-          Cetak</a>
+      <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $nota->id)}}"><i class="fas fa-print"></i>
+        Cetak</a>
     </div>
     <div class="card-body">
+      <form class="row" action="{{route('nota.update', $nota->id)}}" method="POST">
+        @csrf
+        @method('put')
+        <div class="form-group col-6">
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Penerima</label>
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="penerima">
+            <option>{{$nota->penerima->nama}}</option>
+            @foreach ($pejabat as $item)
+            @if ($item->id != $nota->penanda_tangan)
+            <option value="{{$item->id}}">{{$item->nama}}</option>
+            @endif
+            @endforeach
+          </select>
+          <button type="submit" class="btn btn-primary mt-2">Ubah</button>
+        </div>
+      </form>
       <div class="table-responsive">
         <table class="table table-bordered" width="100%" cellspacing="0">
           <thead>
@@ -35,7 +57,7 @@
               <td class="text-right">{{$detail->harga}}</td>
               <td class="text-right">{{$jumlah[$key]}}</td>
               {{-- <td><a href="{{route('detail.nota.edit', $detail->id)}}"><i class="fas fa-edit"></i></a>
-                <i href="{{route('nota.destroy', $detail->id)}}"><i class="fas fa-edit"></i></i>
+              <i href="{{route('nota.destroy', $detail->id)}}"><i class="fas fa-edit"></i></i>
               </td> --}}
             </tr>
             @endforeach

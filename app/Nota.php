@@ -11,4 +11,8 @@ class Nota extends Model
     {
         return $this->hasMany('App\DetailNota', 'nota_id');
     }
+
+    public function penerima(){
+        return $this->belongsTo('App\PejabatBarang', 'penanda_tangan');
+    }
 }
