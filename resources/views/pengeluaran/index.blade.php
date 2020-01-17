@@ -64,7 +64,7 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <form action="{{route('pengeluaran.update', $p->id)}}" method="POST">
+                      <form action="{{route('pengeluaran.keluar', $p->id)}}" method="POST">
                         @csrf
                         @method('put')
                         <div class="modal-body">
@@ -87,21 +87,21 @@
               </td>
               <td>{{$p->permintaan->nomor}}</td>
               <td>
-                @if ($p->nomor_ambil == null)
-                <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add"><i
+                {{-- @if ($p->nomor_ambil == null)
+                <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ambil"><i
                     class="fas fa-edit"></i></button>
                 <!-- Modal Add -->
-                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="ambil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                   aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        {{-- <h5 class="modal-title" id="exampleModalLabel">Masukkan nomor surat perintah pengeluaran</h5> --}}
+                        
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <form action="{{route('pengeluaran.update', $p->id)}}" method="POST">
+                      <form action="{{route('pengeluaran.ambil', $p->id)}}" method="POST">
                         @csrf
                         @method('put')
                         <div class="modal-body">
@@ -120,7 +120,7 @@
                 </div>
                 @else
                 {{$p->nomor_ambil}}
-                @endif
+                @endif --}}
               </td>
             </tr>
             @endforeach

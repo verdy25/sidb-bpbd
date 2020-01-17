@@ -82,5 +82,5 @@ Route::prefix('shb')->name('shb.')->group(function () {
 
 Route::get('/cari-shb', 'NotaController@loadDataSHB')->name('cari.shb');
 Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran.index');
-Route::put('/pengeluaran/{id}', 'PengeluaranController@update')->name('pengeluaran.update');
-Route::post('/pengeluaran/{id}', 'PengeluaranController@bukti_ambil')->name('pengeluaran.ambil');
+Route::put('/pengeluaran/{id}', 'PengeluaranController@update')->name('pengeluaran.keluar');
+// Route::put('/pengeluaran/{id}', 'PengeluaranController@bukti_ambil')->name('pengeluaran.ambil');

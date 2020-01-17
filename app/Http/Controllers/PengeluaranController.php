@@ -17,7 +17,7 @@ class PengeluaranController extends Controller
     public function update(Request $request, $id)
     {
        $request->validate([
-           'nomor_keluar' => 'required|unique:pengeluarans,nomor_keluar'
+           'nomor_keluar' => 'nullable|unique:pengeluarans,nomor_keluar'
        ]);
 
        Pengeluaran::where('id', $id)->update([
@@ -30,7 +30,7 @@ class PengeluaranController extends Controller
     public function bukti_ambil(Request $request, $id)
     {
        $request->validate([
-           'nomor_ambil' => 'required|unique:pengeluarans,nomor_ambil'
+           'nomor_ambil' => 'nullable|unique:pengeluarans,nomor_ambil'
        ]);
 
        Pengeluaran::where('id', $id)->update([
