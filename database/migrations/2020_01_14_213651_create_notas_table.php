@@ -22,7 +22,6 @@ class CreateNotasTable extends Migration
             $table->string('program');
             $table->mediumText('kegiatan')->nullable();
             $table->unsignedBigInteger('penanda_tangan');
-            $table->string('status');
             $table->timestamps();
 
             $table->foreign('penanda_tangan')->references('id')->on('pejabat_barangs');

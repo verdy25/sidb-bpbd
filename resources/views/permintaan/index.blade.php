@@ -13,8 +13,7 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Permintaan</h6>
       <div class="btn-group" role="group" aria-label="Button add data">
-        <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i
-            class="fas fa-plus"></i>
+        <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
           Permintaan</a>
       </div>
 
@@ -29,6 +28,7 @@
               <th>Kepada</th>
               <th>Nomor</th>
               <th>Perihal</th>
+              <th>Status</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -39,15 +39,17 @@
               <td>{{$permintaan->pemohon}}</td>
               <td>{{$permintaan->kepada}}</td>
               <td>{{$permintaan->nomor}}</td>
-            <td>{{$permintaan->perihal}}</td>
-            <td>
-              <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-              <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
-              @csrf
-              @method('delete')
-              <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-              </form>
-            </td>
+              <td>{{$permintaan->perihal}}</td>
+              <td>{{$permintaan->status}}</td>
+              <td>
+                <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
+                    class="fas fa-eye"></i></a>
+                <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+              </td>
             </tr>
             @endforeach
           </tbody>

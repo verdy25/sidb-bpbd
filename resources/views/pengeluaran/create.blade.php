@@ -26,23 +26,14 @@
                 <h6 class="m-0 font-weight-bold text-primary">Form Permintaan</h6>
             </div>
             <div class="card-body">
+
                 <div class="form-group">
                     <label for="kepada">Kepada</label>
-                    <select class="custom-select" id="kepada" name="kepada">
-                        <option></option>
-                        @foreach ($pejabat as $p)
-                        <option value="{{$p->id}}">{{$p->nama}}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" id="kepada" name="kepada" value="{{ old('kepada') }}">
                 </div>
                 <div class="form-group">
                     <label for="pemohon">Pemohon</label>
-                    <select class="custom-select" id="pemohon" name="pemohon">
-                        <option></option>
-                        @foreach ($pejabat as $p)
-                        <option value="{{$p->id}}">{{$p->nama}}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" id="pemohon" name="pemohon" value="{{ old('pemohon') }}">
                 </div>
                 <div class="form-group">
                     <label for="nomor">Nomor Surat</label>

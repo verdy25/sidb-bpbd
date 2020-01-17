@@ -73,6 +73,7 @@ Route::get('/nota/cetak/{id}', 'NotaController@cetak')->name('cetak.pengajuan');
 Route::get('/gudang', 'BarangController@index')->name('gudang');
 Route::get('/data', 'BarangController@data')->name('gudang.data');
 Route::resource('/permintaan', 'PermintaanController');
+Route::get('/permintaan/verif/{id}', 'PermintaanController@edit')->name('permintaan.verif');
 Route::prefix('shb')->name('shb.')->group(function () {
     Route::get('/', 'SHBController@index')->name('index');
     Route::get('/data', 'SHBController@shbList')->name('data');
@@ -80,3 +81,6 @@ Route::prefix('shb')->name('shb.')->group(function () {
 });
 
 Route::get('/cari-shb', 'NotaController@loadDataSHB')->name('cari.shb');
+Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran.index');
+Route::put('/pengeluaran/{id}', 'PengeluaranController@update')->name('pengeluaran.update');
+Route::post('/pengeluaran/{id}', 'PengeluaranController@bukti_ambil')->name('pengeluaran.ambil');

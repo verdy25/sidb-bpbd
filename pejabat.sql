@@ -1,13 +1,4 @@
-﻿/* Showing results for pejabat.xlsx */
-
-/* CREATE TABLE */
-CREATE TABLE pejabat_barangs(
-nip VARCHAR(100),
-nama VARCHAR(100),
-jabatan VARCHAR(100)
-);
-
-/* INSERT QUERY NO: 1 */
+﻿/* INSERT QUERY NO: 1 */
 INSERT INTO pejabat_barangs(nip, nama, jabatan)
 VALUES
 (

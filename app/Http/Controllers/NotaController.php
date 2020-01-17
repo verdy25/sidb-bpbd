@@ -7,7 +7,7 @@ use App\DetailNota;
 use App\Nota;
 use App\PejabatBarang;
 use App\SHBelanja;
-use Carbon\Carbon;
+use App\Http\Controllers\Helpers as help; 
 use Illuminate\Http\Request;
 use PDF;
 
@@ -20,7 +20,7 @@ class NotaController extends Controller
      */
     public function index()
     {
-        $notas = Nota::all();
+        $notas = Nota::orderby('created_at', 'DESC')->get();;
         return view('nota.index', compact('notas'));
     }
 
@@ -57,6 +57,7 @@ class NotaController extends Controller
             'penanda_tangan' => 'required',
             'tanggal' => 'required',
             'barang' => 'required',
+            'merk' => 'nullable',
             'volume' => 'required',
             'harga' => 'required'
         ]);
@@ -69,8 +70,7 @@ class NotaController extends Controller
             'program' => $request->program,
             'kegiatan' => $request->kegiatan,
             'penanda_tangan' => $request->penanda_tangan,
-            'created_at' => $request->tanggal,
-            'status' => 'Belum disahkan'
+            'created_at' => $request->tanggal
         ]);
 
         $form = $request->volume;
@@ -81,6 +81,7 @@ class NotaController extends Controller
                 Barang::create([
                     'kode' => $s->kode_barang,
                     'nama' => $s->nama_barang,
+                    'merk' => $request->merk[$i],
                     'spesifikasi' => $s->spesifikasi,
                     'satuan' => $s->satuan,
                     'stok' => 0
@@ -176,12 +177,14 @@ class NotaController extends Controller
         $details = DetailNota::where('nota_id', $id)->get();
         $total = 0;
         $jumlah = [];
+        $tanggal = help::tgl_indo(date('Y-m-d'), $nota->created_at);
         foreach ($details as $key => $value) {
             $jumlah[$key] = $value->volume * $value->harga;
             $total = $total + ($value->volume * $value->harga);
         }
 
-        $pdf = PDF::loadview('prints.pengajuan', ['nota' => $nota, 'details' => $details, 'total' => $total, 'jumlah' => $jumlah]);
+        // $pdf = PDF::loadview('prints.pengajuan', ['nota' => $nota, 'details' => $details, 'total' => $total, 'jumlah' => $jumlah]);
+        $pdf = PDF::loadview('prints.pengajuan', compact('nota', 'details', 'total', 'jumlah', 'tanggal'));
         return $pdf->stream("pengajuan.pdf", array("Attachment" => false));
     }
 

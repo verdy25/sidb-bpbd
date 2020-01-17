@@ -35,7 +35,6 @@
               <th>Nomor Nota</th>
               <th>Nama PT/CV</th>
               <th>Program</th>
-              <th>Kegiatan</th>
               <th>Penanda Tangan</th>
               <th>Status</th>
               <th>Detail</th>
@@ -48,8 +47,8 @@
               <td>{{$nota->no_nota}}</td>
               <td><a href="" data-target="#pihak_ketiga" data-toggle="modal">{{$nota->pihak_ketiga}}
                 </a></td>
-              <td>{{$nota->program}}</td>
-              <td>{{$nota->kegiatan}}</td>
+              <td><a href="" data-target="#program" data-toggle="modal">{{$nota->program}}
+                </a></td>
               <td>{{$nota->penanda_tangan}}</td>
               <td>{{$nota->status}}</td>
               <td><a href="{{route('nota.show', $nota->id)}}" class="badge badge-primary"><i class="fas fa-eye"></i></a>
@@ -74,7 +73,34 @@
                         </div>
                         <div class="form-group col-md-6">
                           <label for="jabatan">Jabatan</label>
-                          <input type="text" class="form-control" readonly id="jabatan" value="{{$nota->jabatan_perwakilan}}">
+                          <input type="text" class="form-control" readonly id="jabatan"
+                            value="{{$nota->jabatan_perwakilan}}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal Program -->
+              <div class="modal fade" id="program" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Detail Program {{$nota->program}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <label for="kegiatan">Kegiatan</label>
+                          <textarea type="text" class="form-control" id="kegiatan"
+                            value="{{$nota->kegiatan}}" readonly></textarea>
                         </div>
                       </div>
                     </div>

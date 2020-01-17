@@ -3,63 +3,62 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- DataTales Example -->
+  @if ($message = Session::get('success'))
+  <div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+  @endif
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Nota #{{$permintaan->id}} -
-        {{date('d F Y', strtotime($permintaan->created_at))}}</h6>
-        <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $permintaan->id)}}"><i class="fas fa-print"></i>
-          Cetak</a>
+      <h6 class="m-0 font-weight-bold text-primary">Detail Permintaan</h6>
+      {{-- <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $nota->id)}}"><i class="fas fa-print"></i>
+        Cetak</a> --}}
+        <a href="{{route('permintaan.verif', $permintaan->id)}}" class="btn btn-sm btn-primary">Buat persetujuan</a>
     </div>
     <div class="card-body">
+      <table>
+        <tr>
+          <td>Kepada </td>
+          <td> : {{$permintaan->kepada}}</td>
+        </tr>
+        <tr>
+          <td>Pemohon </td>
+          <td> : {{$permintaan->pemohon}}</td>
+        </tr>
+        <tr>
+          <td>Tanggal </td>
+          <td> : {{date('d F Y', strtotime($permintaan->created_at))}}</td>
+        </tr>
+        <tr>
+          <td>Nomor Permintaan </td>
+          <td> : {{$permintaan->nomor}}</td>
+        </tr>
+        <tr>
+          <td>Perihal </td>
+          <td> : {{$permintaan->perihal}}</td>
+        </tr>
+      </table>
       <div class="table-responsive">
         <table class="table table-bordered" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Kepada</th>
-              <td>{{$permintaan->kepada}}</td>
+              <th>No</th>
+              <th>Barang</th>
+              <th>Jumlah</th>
+              <th>Satuan</th>
             </tr>
-            <tr>
-              <th>Pemohon</th>
-              <td>{{$permintaan->pemohon}}</td>            
-            </tr>
-            <tr>
-              <th>Nomor</th>
-              <td>{{$permintaan->nomor}}</td>            
-            </tr>
-            <tr>
-              <th>Perihal</th>
-              <td>{{$permintaan->perihal}}</td>            
-            </tr>
-            
-        
-
-<tr>
-<!-- <th>No</th> -->
-  <th>barang</th>
-  <td>
-
-  @foreach ($detail_permintaan as $d)
-  -{{$d->barang->nama}} (volume : {{$d->jumlah}})<br>
-  @endforeach
-
-  </td>
-</tr>
-
           </thead>
-              
-              
-              {{-- <td><a href="{{route('detail.nota.edit', $detail->id)}}"><i class="fas fa-edit"></i></a>
-                <i href="{{route('nota.destroy', $detail->id)}}"><i class="fas fa-edit"></i></i>
-              </td> --}}
+          <tbody>
+            @foreach ($detail_permintaan as $key => $detail)
+            <tr>
+              <td>{{$key+1}}</td>
+              <td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
+              <td>{{$detail->jumlah}}</td>
+              <td>{{$detail->barang->satuan}}</td>
             </tr>
+            @endforeach
           </tbody>
-          <tfoot>
-            
-            
-          </tfoot>
-        </table>
-
-        <table>
         </table>
       </div>
     </div>

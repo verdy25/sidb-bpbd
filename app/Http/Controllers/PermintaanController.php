@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Barang;
 use App\DetailPermintaan;
+use App\PejabatBarang;
+use App\Pengeluaran;
 use App\Permintaan;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,8 @@ class PermintaanController extends Controller
     public function create()
     {
         $barang = Barang::all();
-        return view('permintaan.create', compact('barang'));
+        $pejabat = PejabatBarang::all();
+        return view('permintaan.create', compact('barang', 'pejabat'));
     }
 
     /**
@@ -55,6 +58,7 @@ class PermintaanController extends Controller
                 'pemohon' => $request->pemohon,
                 'nomor' => $request->nomor,
                 'perihal' => $request->perihal,
+                'status' => 'Belum disetujui'
 
             ]
         );
@@ -65,7 +69,6 @@ class PermintaanController extends Controller
             //    $s = Barang::find($request->barang[$i]);
             $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
             DetailPermintaan::create([
-                // 'nota_id' =>  Nota::get()->last()->id,
                 'id_permintaan' => Permintaan::get()->last()->id,
                 'id_barang' => $request->barang[$i],
                 'jumlah' => $volume,
@@ -85,7 +88,6 @@ class PermintaanController extends Controller
     {
         $permintaan = Permintaan::findOrFail($id);
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
-
         return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan'));
     }
 
@@ -97,7 +99,9 @@ class PermintaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permintaan = Permintaan::findOrFail($id);
+        $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
+        return view('permintaan.detail.verif', compact('permintaan', 'detail_permintaan'));
     }
 
     /**
@@ -109,7 +113,38 @@ class PermintaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'jumlah.*' => 'required|min:0|numeric'
+        ]);
+
+        $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
+        for ($i = 0; $i < count($request->jumlah); $i++) {
+            if ($request->jumlah[$i] > $detail_permintaan[$i]->jumlah) {
+                if ($request->jumlah[$i] > $detail_permintaan[$i]->barang->stok) {
+                    return back()->with('fail', "Jumlah pengeluaran pada data ke " . ($i + 1) . " melebihi stok");
+                } else {
+                    return back()->with('fail', "Jumlah pengeluaran pada data ke " . ($i + 1) . " melebihi permintaan");
+                }
+            }
+        }
+
+        for ($i = 0; $i < count($request->jumlah); $i++) {
+            $detail_permintaan[$i]->update([
+                'jumlah' => $request->jumlah[$i]
+            ]);
+        }
+
+        $permintaan = Permintaan::find($id);
+        $permintaan->update([
+            'status' => 'Disetujui'
+        ]);
+
+        Pengeluaran::create([
+            'id_permintaan' => $id,
+        ]);
+
+        return redirect()->route('permintaan.index')->with('success', 'status permintaan dengan nomor ' . $permintaan
+            ->nomor . ' telah disetujui');
     }
 
     /**

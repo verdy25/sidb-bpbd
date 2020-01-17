@@ -15,11 +15,15 @@ class CreatePermintaansTable extends Migration
     {
         Schema::create('permintaans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('kepada');
-            $table->string('pemohon');
-            $table->string('nomor');
+            $table->unsignedBigInteger('kepada');
+            $table->unsignedBigInteger('pemohon');
+            $table->string('nomor')->unique();
             $table->string('perihal'); 
+            $table->string('status');
             $table->timestamps();
+
+            $table->foreign('kepada')->references('id')->on('pejabat_barangs');
+            $table->foreign('pemohon')->references('id')->on('pejabat_barangs');
         });
     }
 

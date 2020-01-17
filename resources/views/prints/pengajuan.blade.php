@@ -11,17 +11,20 @@
         body {
             font-size: 9pt;
         }
+
+        thead, tbody, td, tr,th {
+            border: 1px solid black;
+        }
     </style>
-    <header style="margin-left: 60%; margin-top:1cm">
-        <p>Banyuwangi, 04 Januari 2019<br />
+    <header style="margin-left: 60%; margin-top:3cm">
+        <p>Banyuwangi, {{$tanggal}}<br />
             Kepada<br />
             Yth. Kepala Pelaksana BPBD Kab. Banyuwangi<br />
             Selaku Pengguna Anggaran<br />
             di Banyuwangi</p>
     </header>
 
-    <table class='table table-bordered'>
-        <thead>
+    <table class='table border border-dark'>
             <tr>
                 <th>No</th>
                 <th>Barang</th>
@@ -31,8 +34,6 @@
                 <th>Harga Satuan (Rp)</th>
                 <th>Jumlah (Rp)</th>
             </tr>
-        </thead>
-        <tbody>
             @foreach ($details as $key => $detail)
             <tr>
                 <td>{{$key+1}}</td>
@@ -48,7 +49,6 @@
                 <td class="text-right" colspan="6"><strong>Total</strong></td>
                 <td class="text-right">{{$total}}</td>
             </tr>
-        </tbody>
     </table>
 
     <footer class="mx-5">
@@ -56,15 +56,15 @@
             <div class="col" style="margin-left: 5%;">
                 <p>Yang Menerima,<br />
                     Pengurus Barang Pengguna<br /><br /><br /><br><br>
-                    WAWAN HERMANTO<br />
-                    NIP. 1980101010 200901 1 025</p>
+                    {{$nota->penerima->nama}}<br />
+                    NIP. {{$nota->penerima->nip}}</p>
 
             </div>
             <div class="col" style="margin-left: 65%;">
                 <p>Yang Menyerahkan,<br />
-                    Nama CV<br /><br /><br /><br><br>
-                    WAWAN HERMANTO<br />
-                    NIP. 1980101010 200901 1 025</p>
+                    {{$nota->pihak_ketiga}}<br /><br /><br /><br><br>
+                    {{$nota->nama_perwakilan}}<br />
+                    {{$nota->jabatan_perwakilan}}</p>
             </div>
         </div>
 
