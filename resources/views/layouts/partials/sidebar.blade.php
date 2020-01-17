@@ -123,6 +123,12 @@
   </li>
 
   <li class="nav-item">
+    <a class="nav-link" href="{{route('gudang')}}">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Gudang</span></a>
+  </li>
+
+  <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePermintaan" aria-expanded="true"
       aria-controls="collapsePermintaan">
       <i class="fas fa-fw fa-folder"></i>

@@ -41,7 +41,7 @@
               <td>{{$permintaan->nomor}}</td>
             <td>{{$permintaan->perihal}}</td>
             <td>
-              <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+              <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
               <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
               @csrf
               @method('delete')

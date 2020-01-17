@@ -70,7 +70,8 @@ Route::get('/utilities-other', function () {
 Route::resource('/pejabat', 'PejabatController');
 Route::resource('/nota', 'NotaController');
 Route::get('/nota/cetak/{id}', 'NotaController@cetak')->name('cetak.pengajuan');
-
+Route::get('/gudang', 'BarangController@index')->name('gudang');
+Route::get('/data', 'BarangController@data')->name('gudang.data');
 Route::resource('/permintaan', 'PermintaanController');
 Route::prefix('shb')->name('shb.')->group(function () {
     Route::get('/', 'SHBController@index')->name('index');

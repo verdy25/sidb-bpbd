@@ -45,7 +45,7 @@ class NotaController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
 
         $request->validate([
             'no_nota' => 'required',

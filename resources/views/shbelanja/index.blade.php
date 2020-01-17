@@ -50,58 +50,12 @@
               <th>Harga</th>
             </tr>
           </thead>
-          {{-- <tbody>
-            @foreach ($shb as $s)
-            <tr>
-              <td>{{$s->kode_barang}}</td>
-              <td>{{$s->nama_barang}}</td>
-              <td>{{$s->spesifikasi}}</td>
-              <td>{{$s->satuan}}</td>
-              <td style="text-align:right">{{$s->harga}}</td>
-            </tr>
-            @endforeach
-          </tbody> --}}
         </table>
       </div>
     </div>
   </div>
 </div>
 <!-- /.container-fluid -->
-
-<!-- Modal Add -->
-{{-- <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah barang</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="{{route('barang.store')}}" method="POST">
-@csrf
-<div class="modal-body">
-  <div class="form-group">
-    <label for="nip">NIP</label>
-    <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan NIP">
-  </div>
-  <div class="form-group">
-    <label for="nama">Nama</label>
-    <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan nama">
-  </div>
-  <div class="form-group">
-    <label for="jabatan">Jabatan</label>
-    <input type="text" name="jabatan" id="jabatan" class="form-control" placeholder="Masukkan jabatan">
-  </div>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-  <button type="submit" class="btn btn-primary">Simpan</button>
-</div>
-</form>
-</div>
-</div>
-</div> --}}
 
 <!-- Modal Import -->
 <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

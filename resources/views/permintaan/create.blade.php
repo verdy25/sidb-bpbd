@@ -59,7 +59,7 @@
                     <select class="custom-select" id="barang" name="barang[]">
                         <option></option>
                         @foreach ($barang as $s)
-                            <option value="{{$s->id}}">{{$s->nama}}</option>
+                            <option value="{{$s->id}}">{{$s->nama}} {{$s->merk}} {{$s->spesifikasi}}</option>
                             @endforeach
                     </select>
                     <div class="input-group-prepend">
