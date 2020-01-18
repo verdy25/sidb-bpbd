@@ -69,7 +69,7 @@ Route::get('/utilities-other', function () {
 
 Route::resource('/pejabat', 'PejabatController');
 Route::resource('/nota', 'NotaController');
-Route::get('/nota/cetak/{id}', 'NotaController@cetak')->name('cetak.pengajuan');
+
 Route::get('/gudang', 'BarangController@index')->name('gudang');
 Route::get('/data', 'BarangController@data')->name('gudang.data');
 Route::resource('/permintaan', 'PermintaanController');
@@ -82,5 +82,9 @@ Route::prefix('shb')->name('shb.')->group(function () {
 
 Route::get('/cari-shb', 'NotaController@loadDataSHB')->name('cari.shb');
 Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran.index');
-Route::put('/pengeluaran/{id}', 'PengeluaranController@update')->name('pengeluaran.keluar');
-// Route::put('/pengeluaran/{id}', 'PengeluaranController@bukti_ambil')->name('pengeluaran.ambil');
+Route::put('/pengeluatan/{id}', 'PengeluaranController@update')->name('pengeluaran.keluar');
+Route::put('/pengeluaran/{id}', 'PengeluaranController@bukti_ambil')->name('pengeluaran.ambil');
+
+//cetak
+Route::get('/nota/cetak/{id}', 'NotaController@cetak')->name('cetak.pengajuan');
+Route::get('/permintaan/cetak/{id}', 'PermintaanController@cetak')->name('cetak.permintaan');

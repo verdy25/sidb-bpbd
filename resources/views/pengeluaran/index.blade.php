@@ -29,8 +29,8 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Data Pengeluaran</h6>
       <div class="btn-group" role="group" aria-label="Button add data">
-        {{-- <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
-        Permintaan</a> --}}
+         <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
+        Permintaan</a> 
       </div>
 
     </div>
@@ -59,7 +59,7 @@
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        {{-- <h5 class="modal-title" id="exampleModalLabel">Masukkan nomor surat perintah pengeluaran</h5> --}}
+                         <h5 class="modal-title" id="exampleModalLabel">Masukkan nomor surat perintah pengeluaran</h5> 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -87,7 +87,7 @@
               </td>
               <td>{{$p->permintaan->nomor}}</td>
               <td>
-                {{-- @if ($p->nomor_ambil == null)
+                 @if ($p->nomor_ambil == null)
                 <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ambil"><i
                     class="fas fa-edit"></i></button>
                 <!-- Modal Add -->
@@ -120,7 +120,7 @@
                 </div>
                 @else
                 {{$p->nomor_ambil}}
-                @endif --}}
+                @endif 
               </td>
             </tr>
             @endforeach

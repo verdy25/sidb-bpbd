@@ -12,31 +12,31 @@ class PengeluaranController extends Controller
     {
         $pengeluarans = Pengeluaran::orderBy('created_at', 'DESC')->get();
         return view('pengeluaran.index', compact('pengeluarans'));
-     }
+    }
 
     public function update(Request $request, $id)
     {
-       $request->validate([
-           'nomor_keluar' => 'nullable|unique:pengeluarans,nomor_keluar'
-       ]);
+        $request->validate([
+            'nomor_keluar' => 'nullable|unique:pengeluarans,nomor_keluar'
+        ]);
 
-       Pengeluaran::where('id', $id)->update([
-           'nomor_keluar' => $request->nomor_keluar
-       ]);
+        Pengeluaran::where('id', $id)->update([
+            'nomor_keluar' => $request->nomor_keluar
+        ]);
 
-       return back()->with('success', 'Berhasil menambah nomor surat perintah pengeluaran / penyaluran barang');
+        return back()->with('success', 'Berhasil menambah nomor surat perintah pengeluaran / penyaluran barang');
     }
 
     public function bukti_ambil(Request $request, $id)
     {
-       $request->validate([
-           'nomor_ambil' => 'nullable|unique:pengeluarans,nomor_ambil'
-       ]);
+        $request->validate([
+            'nomor_ambil' => 'nullable|unique:pengeluarans,nomor_ambil'
+        ]);
 
-       Pengeluaran::where('id', $id)->update([
-        'nomor_ambil' => $request->nomor_ambil
-    ]);
+        Pengeluaran::where('id', $id)->update([
+            'nomor_ambil' => $request->nomor_ambil
+        ]);
 
-       return back()->with('success', 'Berhasil menambah nomor bukti pengambilan barang dari gudang');
+        return back()->with('success', 'Berhasil menambah nomor bukti pengambilan barang dari gudang');
     }
 }

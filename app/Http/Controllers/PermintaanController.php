@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\DetailPengeluaran;
 use App\DetailPermintaan;
 use App\PejabatBarang;
 use App\Pengeluaran;
@@ -58,8 +59,8 @@ class PermintaanController extends Controller
                 'pemohon' => $request->pemohon,
                 'nomor' => $request->nomor,
                 'perihal' => $request->perihal,
-                'status' => 'Belum disetujui'
-
+                'status' => 'Belum disetujui',
+                'created_at' => $request->tanggal
             ]
         );
 
@@ -88,7 +89,9 @@ class PermintaanController extends Controller
     {
         $permintaan = Permintaan::findOrFail($id);
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
-        return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan'));
+        $pengeluaran = Pengeluaran::where('id_permintaan', $id)->first();
+        $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $pengeluaran->id)->get();
+        return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan', 'detail_pengeluaran'));
     }
 
     /**
@@ -128,12 +131,6 @@ class PermintaanController extends Controller
             }
         }
 
-        for ($i = 0; $i < count($request->jumlah); $i++) {
-            $detail_permintaan[$i]->update([
-                'jumlah' => $request->jumlah[$i]
-            ]);
-        }
-
         $permintaan = Permintaan::find($id);
         $permintaan->update([
             'status' => 'Disetujui'
@@ -142,6 +139,14 @@ class PermintaanController extends Controller
         Pengeluaran::create([
             'id_permintaan' => $id,
         ]);
+
+        for ($i = 0; $i < count($request->jumlah); $i++) {
+            DetailPengeluaran::create([
+                'id_pengeluaran' => Pengeluaran::get()->last()->id,
+                'id_barang' => $request->barang[$i],
+                'jumlah' => $request->jumlah[$i] ,
+            ]);
+        }
 
         return redirect()->route('permintaan.index')->with('success', 'status permintaan dengan nomor ' . $permintaan
             ->nomor . ' telah disetujui');
@@ -158,5 +163,9 @@ class PermintaanController extends Controller
         DetailPermintaan::where('id_permintaan', $id)->delete();
         Permintaan::destroy($id);
         return back()->with('success', 'Data berhasil dihapus');
+    }
+
+    public function cetak(){
+        
     }
 }

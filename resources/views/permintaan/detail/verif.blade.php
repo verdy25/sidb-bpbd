@@ -5,24 +5,24 @@
   <!-- DataTales Example -->
   @if ($message = Session::get('success'))
   <div class="alert alert-success alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>{{ $message }}</strong>
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
   </div>
   @endif
   @if ($message = Session::get('fail'))
   <div class="alert alert-danger alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>{{ $message }}</strong>
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
   </div>
   @endif
   @if ($errors->any())
   <div class="alert alert-danger alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <ul>
-          @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-          @endforeach
-      </ul>
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
   </div>
   @endif
   <div class="card shadow mb-4">
@@ -67,7 +67,7 @@
                 <th>Barang</th>
                 <th>Jumlah (permintaan)</th>
                 <th>Stok</th>
-                <th>Jumlah (keluar)</th>
+                <th>Jumlah (disetujui)</th>
                 <th>Satuan</th>
               </tr>
             </thead>
@@ -75,13 +75,15 @@
               @foreach ($detail_permintaan as $key => $detail)
               <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$detail->barang->nama}}{{$detail->barang->merk}}</td>
+                <td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
                 <td>{{$detail->jumlah}}</td>
                 <td>{{$detail->barang->stok}}</td>
-                <td><input type="text" class="form-control" name="jumlah[]"></td>
+                <td><input type="text" class="form-control" name="jumlah[]" value="{{$detail->jumlah}}">
+                  <input type="text" class="form-control" name="barang[]" value="{{$detail->id_barang}}" hidden>
+                </td>
                 <td>{{$detail->barang->satuan}}</td>
               </tr>
-              @endforeach              
+              @endforeach
             </tbody>
           </table>
           <button type="submit" class="btn btn-primary">Setujui</button>

@@ -26,37 +26,52 @@
                 <h6 class="m-0 font-weight-bold text-primary">Form Permintaan</h6>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label for="kepada">Kepada</label>
-                    <select class="custom-select" id="kepada" name="kepada">
-                        <option></option>
-                        @foreach ($pejabat as $p)
-                        <option value="{{$p->id}}">{{$p->nama}}</option>
-                        @endforeach
-                    </select>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="kepada">Kepada</label>
+                        <select class="custom-select" id="kepada" name="kepada">
+                            <option></option>
+                            @foreach ($pejabat as $p)
+                            <option value="{{$p->id}}">{{$p->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pemohon">Pemohon</label>
+                        <select class="custom-select" id="pemohon" name="pemohon">
+                            <option></option>
+                            @foreach ($pejabat as $p)
+                            <option value="{{$p->id}}">{{$p->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="pemohon">Pemohon</label>
-                    <select class="custom-select" id="pemohon" name="pemohon">
-                        <option></option>
-                        @foreach ($pejabat as $p)
-                        <option value="{{$p->id}}">{{$p->nama}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="nomor">Nomor Surat</label>
-                    <input type="text" class="form-control" id="nomor" name="nomor" value="{{ old('nomor') }}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nomor">Nomor Surat</label>
+                        <input type="text" class="form-control" id="nomor" name="nomor" value="{{ old('nomor') }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tanggal">Tanggal Permintaan</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button onclick="setDate()" type="button" class="btn btn-primary"><i
+                                        class="fas fa-calendar-day"></i></button>
+                            </div>
+                            <input type="text" class="form-control" id="tanggal" name="tanggal"
+                                value="{{ old('tanggal') }}">
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="Perihal">Perihal</label>
                     <input type="text" class="form-control" id="perihal" name="perihal" value="{{ old('perihal') }}">
                 </div>
-                
-                
+
+
             </div>
         </div>
-    <div class="card shadow mb-4">
+        <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Tambah barang</h6>
             </div>
@@ -68,14 +83,14 @@
                     <select class="custom-select" id="barang" name="barang[]">
                         <option></option>
                         @foreach ($barang as $s)
-                            <option value="{{$s->id}}">{{$s->nama}} {{$s->merk}} {{$s->spesifikasi}}</option>
-                            @endforeach
+                        <option value="{{$s->id}}">{{$s->nama}} {{$s->merk}} {{$s->spesifikasi}}</option>
+                        @endforeach
                     </select>
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="">volume</span>
                     </div>
                     <input type="text" class="form-control" name="volume[]">
-                    
+
                     <div class="input-group-append">
                         <button class="btn btn-primary btn-add" type="button"><i class="fas fa-plus"></i></button>
                     </div>
@@ -88,14 +103,14 @@
                         <select class="custom-select" id="barang" name="barang[]">
                             <option></option>
                             @foreach ($barang as $s)
-                            <option value="{{$s->id}}">{{$s->nama}}</option>
+                            <option value="{{$s->id}}">{{$s->nama}} {{$s->merk}} {{$s->spesifikasi}}</option>
                             @endforeach
                         </select>
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="">volume</span>
                         </div>
                         <input type="text" class="form-control" name="volume[]">
-                        
+
                         <div class="input-group-append">
                             <button class="btn btn-danger" type="button"><i class="fas fa-minus"></i></button>
                         </div>
@@ -120,7 +135,7 @@
                 </div>
             </div>
         </div>
-        
+
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

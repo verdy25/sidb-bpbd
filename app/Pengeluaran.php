@@ -10,4 +10,8 @@ class Pengeluaran extends Model
     public function permintaan(){
         return $this->belongsTo('App\Permintaan', 'id_permintaan');
     }
+
+    public function detail(){
+        return $this->hasMany('App\DetailPengeluaran', 'id_pengeluaran');
+    }
 }
