@@ -12,11 +12,14 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Detail Permintaan</h6>
-      <a class="btn btn-primary btn-sm" href="{{route('cetak.permintaan', $permintaan->id)}}"><i class="fas fa-print"></i>
-      Cetak</a>
-      @if ($permintaan->status != 'Disetujui')
-      <a href="{{route('permintaan.verif', $permintaan->id)}}" class="btn btn-sm btn-primary">Buat persetujuan</a>
-      @endif
+      <div class="button-group">
+        <a class="btn btn-primary btn-sm" href="{{route('cetak.permintaan', $permintaan->id)}}"><i
+            class="fas fa-print"></i>
+          Cetak</a>
+        @if ($permintaan->status != 'Disetujui')
+        <a href="{{route('permintaan.verif', $permintaan->id)}}" class="btn btn-sm btn-primary">Buat persetujuan</a>
+        @endif
+      </div>
     </div>
     <div class="card-body">
       <table>

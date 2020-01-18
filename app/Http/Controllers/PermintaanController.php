@@ -90,7 +90,10 @@ class PermintaanController extends Controller
         $permintaan = Permintaan::findOrFail($id);
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
         $pengeluaran = Pengeluaran::where('id_permintaan', $id)->first();
-        $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $pengeluaran->id)->get();
+        $detail_pengeluaran = [];
+        if ($pengeluaran != null) {
+            $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $pengeluaran->id)->get();
+        }
         return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan', 'detail_pengeluaran'));
     }
 
