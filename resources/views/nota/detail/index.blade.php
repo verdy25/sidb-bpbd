@@ -30,7 +30,7 @@
             @endif
             @endforeach
           </select>
-          <button type="submit" class="btn btn-primary mt-2">Ubah</button>
+          <button type="submit" class="btn btn-primary mt-2">Ubah Penerima</button>
         </div>
       </form>
       <div class="table-responsive">

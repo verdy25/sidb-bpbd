@@ -30,7 +30,8 @@ class PermintaanController extends Controller
      */
     public function create()
     {
-        $barang = Barang::all();
+        $barang = Barang::where('stok', '>', 0)->get();
+        // $barang = Barang::all();
         $pejabat = PejabatBarang::all();
         return view('permintaan.create', compact('barang', 'pejabat'));
     }
@@ -110,6 +111,13 @@ class PermintaanController extends Controller
         return view('permintaan.detail.verif', compact('permintaan', 'detail_permintaan'));
     }
 
+    public function persetujuan_edit($id)
+    {
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $id)->get();
+        return view('persetujuan.edit', compact('pengeluaran', 'detail_pengeluaran'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -147,12 +155,36 @@ class PermintaanController extends Controller
             DetailPengeluaran::create([
                 'id_pengeluaran' => Pengeluaran::get()->last()->id,
                 'id_barang' => $request->barang[$i],
-                'jumlah' => $request->jumlah[$i] ,
+                'jumlah' => $request->jumlah[$i],
+                'created_at' => $permintaan->created_at
             ]);
         }
 
         return redirect()->route('permintaan.index')->with('success', 'status permintaan dengan nomor ' . $permintaan
             ->nomor . ' telah disetujui');
+    }
+
+    public function persetujuan_update(Request $request, $id)
+    {
+        $request->validate([
+            'jumlah.*' => 'required|numeric|min:0'
+        ]);
+
+        $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $id)->get();
+
+        foreach ($detail_pengeluaran as $key => $value) {
+            if ($request->jumlah[$key] > $detail_pengeluaran[$key]->barang->stok) {
+                return back()->with('fail', "Jumlah yang disetujui pada data ke " . ($key + 1) . " melebihi stok");
+            }
+        }
+
+        foreach ($detail_pengeluaran as $key => $value) {
+            $detail_pengeluaran[$key]->update([
+                'jumlah' => $request->jumlah[$key]
+            ]);
+        }
+
+        return redirect()->route('permintaan.index')->with('success', 'jumlah persetujuan telah diperbarui');
     }
 
     /**
@@ -168,7 +200,6 @@ class PermintaanController extends Controller
         return back()->with('success', 'Data berhasil dihapus');
     }
 
-    public function cetak(){
-        
-    }
+    public function cetak()
+    { }
 }

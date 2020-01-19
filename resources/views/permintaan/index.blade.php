@@ -26,7 +26,7 @@
               <th>No</th>
               <th>Pemohon</th>
               <th>Kepada</th>
-              <th>Nomor</th>
+              <th>Nomor permintaan</th>
               <th>Perihal</th>
               <th>Status</th>
               <th>Aksi</th>

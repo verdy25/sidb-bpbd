@@ -36,8 +36,7 @@
               <th>Nama PT/CV</th>
               <th>Program</th>
               <th>Penanda Tangan</th>
-              <th>Status</th>
-              <th>Detail</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -50,8 +49,12 @@
               <td><a href="" data-target="#program" data-toggle="modal">{{$nota->program}}
                 </a></td>
               <td>{{$nota->penanda_tangan}}</td>
-              <td>{{$nota->status}}</td>
-              <td><a href="{{route('nota.show', $nota->id)}}" class="badge badge-primary"><i class="fas fa-eye"></i></a>
+              <td><a href="{{route('nota.show', $nota->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+                <form action="{{route('nota.destroy', $nota->id)}}" method="POST" class="d-inline">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
               </td>
               <!-- Modal -->
               <div class="modal fade" id="pihak_ketiga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -98,9 +101,7 @@
                     <div class="modal-body">
                       <div class="form-row">
                         <div class="form-group col">
-                          <label for="kegiatan">Kegiatan</label>
-                          <textarea type="text" class="form-control" id="kegiatan"
-                            value="{{$nota->kegiatan}}" readonly></textarea>
+                          <input type="text" class="form-control-plaintext" value=" Kegiatan : {{$nota->kegiatan}}">
                         </div>
                       </div>
                     </div>

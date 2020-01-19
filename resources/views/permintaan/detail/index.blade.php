@@ -73,8 +73,8 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Persetujuan</h6>
-      {{-- <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $nota->id)}}"><i class="fas fa-print"></i>
-      Cetak</a> --}}
+      <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $permintaan->pengeluaran->id)}}"><i class="fas fa-edit"></i>
+      Edit</a>
     </div>
     <div class="card-body">
       <table>

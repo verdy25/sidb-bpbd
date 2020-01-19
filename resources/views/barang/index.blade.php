@@ -29,7 +29,7 @@
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Standar Satuan Harga Belanja</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Daftar barang di gudang</h6>
       <div class="btn-group" role="group" aria-label="Button add data">
         {{-- <button class="btn btn-primary btn-sm" data-target="#add" data-toggle="modal"><i class="fas fa-plus"></i>
           Barang</button> --}}

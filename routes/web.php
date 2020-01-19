@@ -69,11 +69,14 @@ Route::get('/utilities-other', function () {
 
 Route::resource('/pejabat', 'PejabatController');
 Route::resource('/nota', 'NotaController');
-
 Route::get('/gudang', 'BarangController@index')->name('gudang');
 Route::get('/data', 'BarangController@data')->name('gudang.data');
+
 Route::resource('/permintaan', 'PermintaanController');
 Route::get('/permintaan/verif/{id}', 'PermintaanController@edit')->name('permintaan.verif');
+Route::get('/persetujuan/{id}/edit', 'PermintaanController@persetujuan_edit')->name('persetujuan.edit');
+Route::put('/persetujuan/{id}', 'PermintaanController@persetujuan_update')->name('persetujuan.update');
+
 Route::prefix('shb')->name('shb.')->group(function () {
     Route::get('/', 'SHBController@index')->name('index');
     Route::get('/data', 'SHBController@shbList')->name('data');

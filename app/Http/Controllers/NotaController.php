@@ -166,9 +166,19 @@ class NotaController extends Controller
      * @param  \App\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Nota $nota)
+    public function destroy($id)
     {
-        //
+        $detail_nota = DetailNota::where('nota_id', $id)->get();
+        foreach ($detail_nota as $value) {
+            $barang = Barang::where('kode', $value->kode_barang)->first();
+            $barang->update([
+                'stok' => $barang->stok - $value->volume
+            ]);
+        }
+
+        DetailNota::where('nota_id', $id)->delete();
+        Nota::destroy($id);
+        return back()->with('success', 'Data berhasil dihapus');
     }
 
     public function cetak($id)

@@ -119,7 +119,7 @@
   <li class="nav-item">
     <a class="nav-link" href="{{route('nota.index')}}">
       <i class="fas fa-fw fa-table"></i>
-      <span>Nota Pengiriman</span></a>
+      <span>Nota Pengiriman Barang</span></a>
   </li>
 
   <li class="nav-item">

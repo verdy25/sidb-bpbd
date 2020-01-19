@@ -29,8 +29,8 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Data Pengeluaran</h6>
       <div class="btn-group" role="group" aria-label="Button add data">
-         <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
-        Permintaan</a> 
+        <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
+          Permintaan</a>
       </div>
 
     </div>
@@ -40,87 +40,58 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>Nomor Surat Perintah Pengeluaran</th>
-              <th>Nomor Nota Permintaan</th>
-              <th>Nomor Bukti Pengambilan</th>
+              <th>Nota Permintaan</th>
+              <th>Surat Perintah Pengeluaran</th>
+              <th>Bukti Pengambilan</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($pengeluarans as $p)
             <tr>
               <td>{{$loop->iteration}}</td>
+              <td>{{$p->permintaan->nomor}}</td>
               <td>
                 @if ($p->nomor_keluar == null)
-                <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add"><i
-                    class="fas fa-edit"></i></button>
-                <!-- Modal Add -->
-                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                  aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Masukkan nomor surat perintah pengeluaran</h5> 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <form action="{{route('pengeluaran.keluar', $p->id)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="modal-body">
-                          <div class="form-group">
-                            <label for="nomor_keluar">Nomor surat perintah pengeluaran</label>
-                            <input type="text" name="nomor_keluar" id="nomor_keluar" class="form-control">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                          <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                Belum keluar
                 @else
                 {{$p->nomor_keluar}}
                 @endif
               </td>
-              <td>{{$p->permintaan->nomor}}</td>
               <td>
-                 @if ($p->nomor_ambil == null)
-                <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ambil"><i
-                    class="fas fa-edit"></i></button>
-                <!-- Modal Add -->
-                <div class="modal fade" id="ambil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                  aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <form action="{{route('pengeluaran.ambil', $p->id)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="modal-body">
-                          <div class="form-group">
-                            <label for="nomor_ambil">Nomor Bukti Pengambilan Barang dari Gudang</label>
-                            <input type="text" name="nomor_ambil" id="nomor_ambil" class="form-control">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                          <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                      </form>
+                @if ($p->nomor_ambil == null)
+                Belum keluar
+                @else
+                {{$p->nomor_ambil}}
+                @endif
+              </td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Buat
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      <a class="dropdown-item" href="#">SPPB</a>
+                      <a class="dropdown-item" href="#">BPBG</a>
+                    </div>
+                  </div>
+                
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Cetak
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      <a class="dropdown-item" href="#">SPPB</a>
+                      <a class="dropdown-item" href="#">BPBG</a>
                     </div>
                   </div>
                 </div>
-                @else
-                {{$p->nomor_ambil}}
-                @endif 
+                {{-- <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form> --}}
               </td>
             </tr>
             @endforeach
