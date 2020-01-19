@@ -11,24 +11,12 @@
 |
 */
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/404', function () {
     return view('404');
-});
-
-Route::get('/blank', function () {
-    return view('blank');
-});
-
-Route::get('/buttons', function () {
-    return view('buttons');
-});
-
-Route::get('/cards', function () {
-    return view('cards');
-});
-
-Route::get('/charts', function () {
-    return view('charts');
 });
 
 Route::get('/forgot-password', function () {
@@ -47,25 +35,6 @@ Route::get('/register', function () {
     return view('auth.register');
 });
 
-Route::get('/tables', function () {
-    return view('tables');
-});
-
-Route::get('/utilities-animation', function () {
-    return view('utilities-animation');
-});
-
-Route::get('/utilities-border', function () {
-    return view('utilities-border');
-});
-
-Route::get('/utilities-color', function () {
-    return view('utilities-color');
-});
-
-Route::get('/utilities-other', function () {
-    return view('utilities-other');
-});
 
 //pejabat
 Route::resource('/pejabat', 'PejabatController');
@@ -115,3 +84,7 @@ Route::get('/permintaan/bpbg/{id}/cetak', 'PengeluaranController@bpbg_print')->n
 
 //pencarian
 Route::get('/cari-shb', 'NotaController@loadDataSHB')->name('cari.shb');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
