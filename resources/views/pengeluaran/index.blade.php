@@ -72,8 +72,12 @@
                       Buat
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      @if ($p->nomor_keluar == null)
                       <a class="dropdown-item" href="{{route('sppb.create', $p->id)}}">SPPB</a>
+                      @endif
+                      @if ($p->nomor_ambil == null)
                       <a class="dropdown-item" href="{{route('bpbg.create', $p->id)}}">BPBG</a>
+                      @endif
                     </div>
                   </div>
                 
@@ -82,8 +86,12 @@
                       Cetak
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                      <a class="dropdown-item" href="#">SPPB</a>
-                      <a class="dropdown-item" href="#">BPBG</a>
+                      @if ($p->nomor_keluar != null)
+                      <a class="dropdown-item" href="{{route('cetak.sppb', $p->id)}}">SPPB</a>
+                      @endif
+                      @if ($p->nomor_ambil != null)
+                      <a class="dropdown-item" href="{{route('cetak.bpbg', $p->id)}}">BPBG</a>
+                      @endif
                     </div>
                   </div>
                 </div>

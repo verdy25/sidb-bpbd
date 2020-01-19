@@ -69,12 +69,15 @@
     </div>
   </div>
 
-  @if ($permintaan->status == 'Disetujui')
+  @if ($permintaan->status != 'Belum disetujui')
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Persetujuan</h6>
-      <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $permintaan->pengeluaran->id)}}"><i class="fas fa-edit"></i>
-      Edit</a>
+      @if ($permintaan->status != 'Barang telah diambil')
+      <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $permintaan->pengeluaran->id)}}"><i
+          class="fas fa-edit"></i>
+        Edit</a>
+      @endif
     </div>
     <div class="card-body">
       <table>

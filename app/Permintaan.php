@@ -18,4 +18,8 @@ class Permintaan extends Model
     public function pengeluaran(){
         return $this->hasOne('App\DetailPengeluaran', 'id_pengeluaran');
     }
+
+    public function pemohon_user(){
+        return $this->belongsTo('App\PejabatBarang', 'pemohon');
+    }
 }

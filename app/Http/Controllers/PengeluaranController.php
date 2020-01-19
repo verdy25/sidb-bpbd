@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\DetailPengeluaran;
 use App\PejabatBarang;
 use App\Pengeluaran;
+use App\Permintaan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Helpers as help;
+use App\SHBelanja;
+use PDF;
 
 class PengeluaranController extends Controller
 {
@@ -61,6 +66,10 @@ class PengeluaranController extends Controller
             'kepada_user' => $request->pejabat
         ]);
 
+        Permintaan::where('id', $pengeluaran->id_permintaan)->update([
+            'status' => 'Surat perintah pengeluaran barang telah keluar'
+        ]);
+
         return redirect()->route('pengeluaran.index')->with('success', 'Surat Perintah Pengeluaran / Penyaluran Barang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
     }
 
@@ -77,6 +86,17 @@ class PengeluaranController extends Controller
             'nomor_ambil' => $request->nomor,
             'penyerah_user' => $request->pejabat
         ]);
+
+        Permintaan::where('id', $pengeluaran->id_permintaan)->update([
+            'status' => 'Barang telah diambil'
+        ]);
+
+        $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $id)->get();
+        foreach ($detail_pengeluaran as $key => $value) {
+            Barang::where('kode', $value->barang->kode)->update([
+                'stok' => $value->barang->stok - $value->jumlah
+            ]);
+        }
 
         return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
     }
@@ -115,11 +135,33 @@ class PengeluaranController extends Controller
         return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
     }
 
-    public function sppb_print()
-    { }
+    public function sppb_print($id)
+    { 
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $details = DetailPengeluaran::where('id_pengeluaran', $id)->get();
+        $tanggal = help::tgl_indo(date('Y-m-d'), $pengeluaran->created_at);
 
-    public function bpbg_print()
-    { }
+        $pdf = PDF::loadview('prints.sppb', compact('pengeluaran', 'details', 'tanggal'));
+        return $pdf->stream("surat-perintah-pengeluaran-penyaluran-barang.pdf", array("Attachment" => false));
+    }
+
+    public function bpbg_print($id)
+    {
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $details = DetailPengeluaran::where('id_pengeluaran', $id)->get();
+        $tanggal = help::tgl_indo(date('Y-m-d'), $pengeluaran->created_at);
+        $harga_satuan = [];
+        $jumlah = [];
+
+        foreach ($details as $key => $value) {
+            $shb = SHBelanja::where('kode_barang', $value->barang->kode)->first();
+            $harga_satuan[$key] = $shb->harga;
+            $jumlah[$key] = $shb->harga * $value->jumlah;
+        }
+
+        $pdf = PDF::loadview('prints.bpbg', compact('pengeluaran', 'details', 'tanggal', 'harga_satuan', 'jumlah'));
+        return $pdf->stream("bukti-pengambilan-barang-dari-gudang.pdf", array("Attachment" => false));
+     }
 
     public function update(Request $request, $id)
     {

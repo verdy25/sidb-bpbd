@@ -110,6 +110,8 @@ Route::put('/pengeluaran/{id}/bpbg', 'PengeluaranController@bpbg_update')->name(
 //cetak
 Route::get('/nota/cetak/{id}', 'NotaController@cetak')->name('cetak.pengajuan');
 Route::get('/permintaan/cetak/{id}', 'PermintaanController@cetak')->name('cetak.permintaan');
+Route::get('/pengeluaran/sppb/{id}/cetak', 'PengeluaranController@sppb_print')->name('cetak.sppb');
+Route::get('/permintaan/bpbg/{id}/cetak', 'PengeluaranController@bpbg_print')->name('cetak.bpbg');
 
 //pencarian
 Route::get('/cari-shb', 'NotaController@loadDataSHB')->name('cari.shb');

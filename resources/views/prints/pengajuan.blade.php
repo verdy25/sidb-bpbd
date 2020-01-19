@@ -12,8 +12,13 @@
             font-size: 9pt;
         }
 
-        thead, tbody, td, tr,th {
-            border: 1px solid black;
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            height: 50px;
         }
     </style>
     <header style="margin-left: 60%; margin-top:3cm">
@@ -25,30 +30,30 @@
     </header>
 
     <table class='table border border-dark'>
-            <tr>
-                <th>No</th>
-                <th>Barang</th>
-                <th>Merk</th>
-                <th>Volume</th>
-                <th>Satuan</th>
-                <th>Harga Satuan (Rp)</th>
-                <th>Jumlah (Rp)</th>
-            </tr>
-            @foreach ($details as $key => $detail)
-            <tr>
-                <td>{{$key+1}}</td>
-                <td>{{$detail->barang->nama}}</td>
-                <td>{{$detail->barang->spesifikasi}}</td>
-                <td>{{$detail->volume}}</td>
-                <td>{{$detail->barang->satuan}}</td>
-                <td class="text-right">{{$detail->harga}}</td>
-                <td class="text-right">{{$jumlah[$key]}}</td>
-            </tr>
-            @endforeach
-            <tr>
-                <td class="text-right" colspan="6"><strong>Total</strong></td>
-                <td class="text-right">{{$total}}</td>
-            </tr>
+        <tr>
+            <th>No</th>
+            <th>Barang</th>
+            <th>Merk</th>
+            <th>Volume</th>
+            <th>Satuan</th>
+            <th>Harga Satuan (Rp)</th>
+            <th>Jumlah (Rp)</th>
+        </tr>
+        @foreach ($details as $key => $detail)
+        <tr>
+            <td>{{$key+1}}</td>
+            <td>{{$detail->barang->nama}}</td>
+            <td>{{$detail->barang->spesifikasi}}</td>
+            <td>{{$detail->volume}}</td>
+            <td>{{$detail->barang->satuan}}</td>
+            <td class="text-right">{{$detail->harga}}</td>
+            <td class="text-right">{{$jumlah[$key]}}</td>
+        </tr>
+        @endforeach
+        <tr>
+            <td class="text-right" colspan="6"><strong>Total</strong></td>
+            <td class="text-right">{{$total}}</td>
+        </tr>
     </table>
 
     <footer class="mx-5">
@@ -67,7 +72,7 @@
                     {{$nota->jabatan_perwakilan}}</p>
             </div>
         </div>
-
+    </footer>
 
 </body>
 

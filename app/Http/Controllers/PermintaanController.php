@@ -8,6 +8,9 @@ use App\DetailPermintaan;
 use App\PejabatBarang;
 use App\Pengeluaran;
 use App\Permintaan;
+use App\Http\Controllers\Helpers as help;
+use PDF;
+
 use Illuminate\Http\Request;
 
 class PermintaanController extends Controller
@@ -200,6 +203,13 @@ class PermintaanController extends Controller
         return back()->with('success', 'Data berhasil dihapus');
     }
 
-    public function cetak()
-    { }
+    public function cetak($id)
+    {
+        $permintaan = Permintaan::findOrFail($id);
+        $details = DetailPermintaan::where('id_permintaan', $id)->get();
+        $tanggal = help::tgl_indo(date('Y-m-d'), $permintaan->created_at);
+        
+        $pdf = PDF::loadview('prints.permintaan', compact('permintaan', 'details', 'tanggal'));
+        return $pdf->stream("permintaan.pdf", array("Attachment" => false));
+    }
 }
