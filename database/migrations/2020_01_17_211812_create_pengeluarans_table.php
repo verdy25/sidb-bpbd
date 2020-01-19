@@ -22,7 +22,6 @@ class CreatePengeluaransTable extends Migration
             $table->string('nomor_ambil')->unique()->nullable();
             $table->unsignedBigInteger('penyerah_user')->nullable();
             $table->unsignedBigInteger('kepada_user')->nullable();
-            $table->string('kdari')->nullable();
             $table->timestamps();
 
             $table->foreign('id_permintaan')->references('id')->on('permintaans');

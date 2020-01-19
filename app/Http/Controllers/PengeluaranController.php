@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\PejabatBarang;
 use App\Pengeluaran;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,112 @@ class PengeluaranController extends Controller
         $pengeluarans = Pengeluaran::orderBy('created_at', 'DESC')->get();
         return view('pengeluaran.index', compact('pengeluarans'));
     }
+
+    public function sppb($id)
+    {
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $pejabats = PejabatBarang::all();
+        return view('pengeluaran.sppb.edit', compact('pejabats', 'pengeluaran'));
+    }
+
+    public function bpbg($id)
+    {
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $pejabats = PejabatBarang::all();
+        return view('pengeluaran.bpbg.edit', compact('pejabats', 'pengeluaran'));
+    }
+
+    public function sppb_create($id)
+    {
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $pejabats = PejabatBarang::all();
+        return view('pengeluaran.sppb.create', compact('pejabats', 'pengeluaran'));
+    }
+
+    public function bpbg_create($id)
+    {
+        $pengeluaran = Pengeluaran::findOrFail($id);
+        $pejabats = PejabatBarang::all();
+        return view('pengeluaran.bpbg.create', compact('pejabats', 'pengeluaran'));
+    }
+
+    public function sppb_store(Request $request, $id)
+    {
+        $request->validate([
+            'nomor' => 'required|unique:pengeluarans,nomor_keluar',
+            'kepada' => 'required',
+            'dari' => 'required',
+            'pejabat' => 'required'
+        ]);
+
+        $pengeluaran = Pengeluaran::findOrFail($id);
+
+        $pengeluaran->update([
+            'nomor_keluar' => $request->nomor,
+            'kepada' => $request->kepada,
+            'dari' => $request->dari,
+            'kepada_user' => $request->pejabat
+        ]);
+
+        return redirect()->route('pengeluaran.index')->with('success', 'Surat Perintah Pengeluaran / Penyaluran Barang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+    }
+
+    public function bpbg_store(Request $request, $id)
+    {
+        $request->validate([
+            'nomor' => 'required|unique:pengeluarans,nomor_ambil',
+            'pejabat' => 'required'
+        ]);
+
+        $pengeluaran = Pengeluaran::findOrFail($id);
+
+        $pengeluaran->update([
+            'nomor_ambil' => $request->nomor,
+            'penyerah_user' => $request->pejabat
+        ]);
+
+        return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+    }
+
+    public function sppb_update(Request $request, $id)
+    {
+        $request->validate([
+            'kepada' => 'required',
+            'dari' => 'required',
+            'pejabat' => 'required'
+        ]);
+
+        $pengeluaran = Pengeluaran::findOrFail($id);
+
+        $pengeluaran->update([
+            'kepada' => $request->kepada,
+            'dari' => $request->dari,
+            'kepada_user' => $request->pejabat
+        ]);
+
+        return redirect()->route('pengeluaran.index')->with('success', 'Surat Perintah Pengeluaran / Penyaluran Barang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+    }
+
+    public function bpbg_update(Request $request, $id)
+    {
+        $request->validate([
+            'pejabat' => 'required'
+        ]);
+
+        $pengeluaran = Pengeluaran::findOrFail($id);
+
+        $pengeluaran->update([
+            'penyerah_user' => $request->pejabat
+        ]);
+
+        return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+    }
+
+    public function sppb_print()
+    { }
+
+    public function bpbg_print()
+    { }
 
     public function update(Request $request, $id)
     {

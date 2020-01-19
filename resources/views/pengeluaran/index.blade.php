@@ -50,19 +50,19 @@
             @foreach ($pengeluarans as $p)
             <tr>
               <td>{{$loop->iteration}}</td>
-              <td>{{$p->permintaan->nomor}}</td>
+              <td><a href="{{route('permintaan.show',$p->permintaan->id)}}">{{$p->permintaan->nomor}}</a></td>
               <td>
                 @if ($p->nomor_keluar == null)
                 Belum keluar
                 @else
-                {{$p->nomor_keluar}}
+                <a href="{{route('sppb.edit', $p->id)}}">{{$p->nomor_keluar}}</a>
                 @endif
               </td>
               <td>
                 @if ($p->nomor_ambil == null)
                 Belum keluar
                 @else
-                {{$p->nomor_ambil}}
+                <a href="{{route('bpbg.edit', $p->id)}}">{{$p->nomor_ambil}}</a>
                 @endif
               </td>
               <td>
@@ -72,8 +72,8 @@
                       Buat
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                      <a class="dropdown-item" href="#">SPPB</a>
-                      <a class="dropdown-item" href="#">BPBG</a>
+                      <a class="dropdown-item" href="{{route('sppb.create', $p->id)}}">SPPB</a>
+                      <a class="dropdown-item" href="{{route('bpbg.create', $p->id)}}">BPBG</a>
                     </div>
                   </div>
                 

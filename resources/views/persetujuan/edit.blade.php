@@ -74,14 +74,14 @@
             <tbody>
               @foreach ($detail_pengeluaran as $key => $detail)
               <tr>
-                <td>{{$key+1}}</td>
-                <td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
-                <td>{{$detail->pengeluaran->permintaan->detail[$key]->jumlah}}</td>
-                <td>{{$detail->barang->stok}}</td>
-                <td><input type="text" class="form-control" name="jumlah[]" value="{{$detail->jumlah}}">
+                <td class="align-middle">{{$key+1}}</td>
+                <td class="align-middle">{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
+                <td class="align-middle">{{$detail->pengeluaran->permintaan->detail[$key]->jumlah}}</td>
+                <td class="align-middle">{{$detail->barang->stok}}</td>
+                <td class="align-middle"><input type="text" class="form-control-plaintext font-weight-bold" name="jumlah[]" value="{{$detail->jumlah}}">
                   <input type="text" class="form-control" name="barang[]" value="{{$detail->id_barang}}" hidden>
                 </td>
-                <td>{{$detail->barang->satuan}}</td>
+                <td class="align-middle">{{$detail->barang->satuan}}</td>
               </tr>
               @endforeach
             </tbody>
