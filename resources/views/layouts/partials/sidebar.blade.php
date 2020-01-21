@@ -3,10 +3,7 @@
 
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-    <div class="sidebar-brand-icon rotate-n-15">
-      <i class="fas fa-laugh-wink"></i>
-    </div>
-    <div class="sidebar-brand-text mx-3">Admin</div>
+    <div class="sidebar-brand-text mx-3">SIDB</div>
   </a>
 
   <!-- Divider -->
@@ -82,26 +79,14 @@
   <li class="nav-item">
     <a class="nav-link" href="{{route('gudang')}}">
       <i class="fas fa-fw fa-table"></i>
-      <span>Gudang</span></a>
+      <span>Stok barang</span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePermintaan" aria-expanded="true"
-      aria-controls="collapsePermintaan">
-      <i class="fas fa-fw fa-folder"></i>
-      <span>Permintaan</span>
-    </a>
-    <div id="collapsePermintaan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Bidang:</h6>
-        
-        <div class="collapse-divider"></div>
-        <h6 class="collapse-header">Sekretaris:</h6>
-        <a class="collapse-item" href="{{route('permintaan.index')}}">Permintaan</a>
-
-      </div>
-    </div>
-  </li> 
+    <a class="nav-link" href="{{route('permintaan.index')}}">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Permintaan</span></a>
+  </li>
 
   <li class="nav-item">
     <a class="nav-link" href="{{route('pengeluaran.index')}}">

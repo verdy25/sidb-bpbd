@@ -29,14 +29,14 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Data Pengeluaran</h6>
       <div class="btn-group" role="group" aria-label="Button add data">
-        <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
-          Permintaan</a>
+        {{-- <a href="{{route('permintaan.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
+          Permintaan</a> --}}
       </div>
 
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size:14px">
           <thead>
             <tr>
               <th>No</th>
@@ -87,10 +87,10 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       @if ($p->nomor_keluar != null)
-                      <a class="dropdown-item" href="{{route('cetak.sppb', $p->id)}}">SPPB</a>
+                      <a class="dropdown-item" href="{{route('cetak.sppb', $p->id)}}" target="_blank" >SPPB</a>
                       @endif
                       @if ($p->nomor_ambil != null)
-                      <a class="dropdown-item" href="{{route('cetak.bpbg', $p->id)}}">BPBG</a>
+                      <a class="dropdown-item" href="{{route('cetak.bpbg', $p->id)}}" target="_blank" >BPBG</a>
                       @endif
                     </div>
                   </div>

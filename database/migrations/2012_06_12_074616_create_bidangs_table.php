@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePejabatBarangsTable extends Migration
+class CreateBidangsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreatePejabatBarangsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pejabat_barangs', function (Blueprint $table) {
+        Schema::create('bidangs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nip')->unique();
             $table->string('nama');
-            $table->string('jabatan');
-            $table->unsignedBigInteger('id_bidang')->nullable();
             $table->timestamps();
-
-            $table->foreign('id_bidang')->references('id')->on('bidangs');
         });
     }
 
@@ -32,6 +27,6 @@ class CreatePejabatBarangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pejabat_barangs');
+        Schema::dropIfExists('bidangs');
     }
 }

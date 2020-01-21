@@ -52,8 +52,10 @@ class PermintaanController extends Controller
             [
                 'kepada' => 'required',
                 'pemohon' => 'required',
-                'nomor' => 'required',
+                'nomor' => 'required|unique:permintaans,nomor',
                 'perihal' => 'required',
+                'barang.*' => 'required',
+                'jumlah.*' => 'required'
             ]
         );
 
@@ -70,7 +72,7 @@ class PermintaanController extends Controller
 
         $form = $request->volume;
 
-        for ($i = 0; $i < count($form) - 1; $i++) {
+        for ($i = 0; $i < count($form); $i++) {
             //    $s = Barang::find($request->barang[$i]);
             $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
             DetailPermintaan::create([
@@ -98,7 +100,66 @@ class PermintaanController extends Controller
         if ($pengeluaran != null) {
             $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $pengeluaran->id)->get();
         }
-        return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan', 'detail_pengeluaran'));
+        return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan', 'detail_pengeluaran', 'pengeluaran'));
+    }
+
+    public function ubah($id)
+    {
+        $pejabat = PejabatBarang::all();
+        $barang = Barang::all();
+        $permintaan = Permintaan::findOrFail($id);
+        $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
+        $pengeluaran = Pengeluaran::where('id_permintaan', $id)->first();
+        $detail_pengeluaran = [];
+        if ($pengeluaran != null) {
+            $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $pengeluaran->id)->get();
+        }
+        return view('permintaan.detail.edit', compact('pejabat', 'barang', 'permintaan', 'detail_permintaan', 'detail_pengeluaran'));
+    }
+
+    public function update_permintaan(Request $request, $id)
+    {
+        // dd($request->all());
+        $permintaan = Permintaan::findOrFail($id);
+        $request->validate(
+            [
+                'kepada' => 'required',
+                'pemohon' => 'required',
+                'nomor' => "required|unique:permintaans,nomor, $id",
+                'perihal' => 'required',
+                'barang.*' => 'required',
+                'jumlah.*' => 'required'
+            ]
+        );
+
+        Permintaan::where('id', $id)->update(
+            [
+                'kepada' => $request->kepada,
+                'pemohon' => $request->pemohon,
+                'nomor' => $request->nomor,
+                'perihal' => $request->perihal,
+                'created_at' => $request->tanggal
+            ]
+        );
+
+        $form = $request->volume;
+        $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
+        for ($i = 0; $i < count($form); $i++) {
+            $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
+            if ( $i >= count($detail_permintaan)) {
+                DetailPermintaan::create([
+                    'id_permintaan' => $id,
+                    'id_barang' => $request->barang[$i],
+                    'jumlah' => $volume,
+                ]);
+            } else {
+                DetailPermintaan::where('id', $detail_permintaan[$i]->id)->where('id_permintaan', $id)->update([
+                    'id_barang' => $request->barang[$i],
+                    'jumlah' => $volume,
+                ]);
+            }
+        }
+        return back()->with('success', 'Permintaan nomor '.$permintaan->nomor.' berhasil diubah');
     }
 
     /**
@@ -128,10 +189,11 @@ class PermintaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function store_persetujuan(Request $request, $id)
     {
         $request->validate([
-            'jumlah.*' => 'required|min:0|numeric'
+            'jumlah.*' => 'required|min:0|numeric',
+            'keterangan' => 'nullable'
         ]);
 
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
@@ -147,11 +209,12 @@ class PermintaanController extends Controller
 
         $permintaan = Permintaan::find($id);
         $permintaan->update([
-            'status' => 'Disetujui'
+            'status' => 'Disetujui',
         ]);
 
         Pengeluaran::create([
             'id_permintaan' => $id,
+            'keterangan' => $request->keterangan
         ]);
 
         for ($i = 0; $i < count($request->jumlah); $i++) {
@@ -159,7 +222,7 @@ class PermintaanController extends Controller
                 'id_pengeluaran' => Pengeluaran::get()->last()->id,
                 'id_barang' => $request->barang[$i],
                 'jumlah' => $request->jumlah[$i],
-                'created_at' => $permintaan->created_at
+                'created_at' => $permintaan->created_at,
             ]);
         }
 
@@ -208,7 +271,7 @@ class PermintaanController extends Controller
         $permintaan = Permintaan::findOrFail($id);
         $details = DetailPermintaan::where('id_permintaan', $id)->get();
         $tanggal = help::tgl_indo(date('Y-m-d'), $permintaan->created_at);
-        
+
         $pdf = PDF::loadview('prints.permintaan', compact('permintaan', 'details', 'tanggal'));
         return $pdf->stream("permintaan.pdf", array("Attachment" => false));
     }

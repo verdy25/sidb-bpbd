@@ -57,7 +57,7 @@
 	<table class="no-border">
 		<tr class="no-border">
 			<td class="no-border" style="padding-right:1cm">Dari</td>
-			<td class="no-border">: Pengguna Barang</td>
+			<td class="no-border">: {{$pengeluaran->dari}}</td>
 		</tr>
 		<tr class="no-border">
 			<td class="no-border">Kepada</td>
@@ -86,7 +86,7 @@
 	<footer>
 		<div style="margin-left: 60%;">
 			<p>Banyuwangi, {{$tanggal}}<br />
-				Pemohon, <br /><br /><br /><br><br>
+				{{$pengeluaran->dari}}, <br /><br /><br /><br><br>
 				<u>{{$pengeluaran->dari_user->nama}}</u><br />
 				NIP. {{$pengeluaran->dari_user->nip}}</p>
 		</div>

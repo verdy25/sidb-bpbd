@@ -40,7 +40,7 @@
                                 <button onclick="setDate()" type="button" class="btn btn-primary"><i
                                         class="fas fa-calendar-day"></i></button>
                             </div>
-                            <input type="text" class="form-control" id="tanggal" name="tanggal"
+                            <input type="date" class="form-control" id="tanggal" name="tanggal"
                                 value="{{ old('tanggal') }}">
                         </div>
                     </div>

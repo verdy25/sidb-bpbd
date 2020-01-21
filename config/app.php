@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Sistem Logistik BPBD Banyuwangi'),
+    'name' => env('APP_NAME', 'Sistem Informasi Pendistribusian Barang BPBD Banyuwangi'),
 
     /*
     |--------------------------------------------------------------------------

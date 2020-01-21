@@ -32,7 +32,7 @@
       Cetak</a> --}}
     </div>
     <div class="card-body">
-      <form action="{{route('permintaan.update', $permintaan->id)}}" method="POST">
+      <form action="{{route('persetujuan.store', $permintaan->id)}}" method="POST">
         @csrf
         @method('put')
         <input type="text" hidden value="{{$permintaan->id}}" name="id">
@@ -50,7 +50,7 @@
             <td> : {{date('d F Y', strtotime($permintaan->created_at))}}</td>
           </tr>
           <tr>
-            <td>Nomor Permintaan </td>
+            <td style="padding-right:20px;">Nomor Permintaan </td>
             <td> : {{$permintaan->nomor}}</td>
           </tr>
           <tr>
@@ -78,7 +78,8 @@
                 <td class="align-middle">{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
                 <td class="align-middle">{{$detail->jumlah}}</td>
                 <td class="align-middle">{{$detail->barang->stok}}</td>
-                <td class="align-middle"><input type="text" class="form-control-plaintext font-weight-bold" name="jumlah[]" value="{{$detail->jumlah}}">
+                <td class="align-middle"><input type="text" class="form-control font-weight-bold" name="jumlah[]"
+                    value="{{$detail->jumlah}}">
                   <input type="text" class="form-control" name="barang[]" value="{{$detail->id_barang}}" hidden>
                 </td>
                 <td class="align-middle">{{$detail->barang->satuan}}</td>
@@ -86,6 +87,10 @@
               @endforeach
             </tbody>
           </table>
+          <div class="form-group">
+            <label for="keterngan">Keterangan</label>
+            <textarea name="keterangan" id="keterangan" rows="3" class="form-control"></textarea>
+          </div>
           <button type="submit" class="btn btn-primary">Setujui</button>
         </div>
       </form>

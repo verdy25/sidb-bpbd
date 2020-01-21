@@ -22,4 +22,8 @@ class Permintaan extends Model
     public function pemohon_user(){
         return $this->belongsTo('App\PejabatBarang', 'pemohon');
     }
+
+    public function kepada_user(){
+        return $this->belongsTo('App\PejabatBarang', 'kepada');
+    }
 }

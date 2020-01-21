@@ -38,7 +38,8 @@
                     <input type="text" class="form-control" id="dari" name="dari" value="{{ old('dari') }}">
                 </div>
                 <div class="form-group">
-                    <select name="pejabat" id="pejabat" class="form-control">
+                    <label for="penandatangan">Penanda tangan</label>
+                    <select name="penandatangan" id="penandatangan" class="form-control">
                         <option></option>
                         @foreach ($pejabats as $item)
                         <option value="{{$item->id}}">{{$item->nama}}</option>

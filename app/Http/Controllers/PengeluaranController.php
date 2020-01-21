@@ -54,7 +54,7 @@ class PengeluaranController extends Controller
             'nomor' => 'required|unique:pengeluarans,nomor_keluar',
             'kepada' => 'required',
             'dari' => 'required',
-            'pejabat' => 'required'
+            'penandatangan' => 'required'
         ]);
 
         $pengeluaran = Pengeluaran::findOrFail($id);
@@ -63,7 +63,7 @@ class PengeluaranController extends Controller
             'nomor_keluar' => $request->nomor,
             'kepada' => $request->kepada,
             'dari' => $request->dari,
-            'kepada_user' => $request->pejabat
+            'kepada_user' => $request->penandatangan
         ]);
 
         Permintaan::where('id', $pengeluaran->id_permintaan)->update([

@@ -16,7 +16,7 @@
         <a class="btn btn-primary btn-sm" href="{{route('cetak.permintaan', $permintaan->id)}}"><i
             class="fas fa-print"></i>
           Cetak</a>
-        @if ($permintaan->status != 'Disetujui')
+        @if ($permintaan->status == 'Belum disetujui')
         <a href="{{route('permintaan.verif', $permintaan->id)}}" class="btn btn-sm btn-primary">Buat persetujuan</a>
         @endif
       </div>
@@ -69,6 +69,7 @@
     </div>
   </div>
 
+
   @if ($permintaan->status != 'Belum disetujui')
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -76,7 +77,7 @@
       @if ($permintaan->status != 'Barang telah diambil')
       <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $permintaan->pengeluaran->id)}}"><i
           class="fas fa-edit"></i>
-        Edit</a>
+        Ubah persetujuan</a>
       @endif
     </div>
     <div class="card-body">
@@ -123,6 +124,10 @@
             @endforeach
           </tbody>
         </table>
+        <div class="form-group">
+          <label><b>Keterangan</b></label>
+          <textarea rows="3" class="form-control-plaintext" disabled>{{$pengeluaran->keterangan}}</textarea>
+        </div>
       </div>
     </div>
   </div>

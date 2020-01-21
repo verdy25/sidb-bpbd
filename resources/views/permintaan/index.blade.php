@@ -20,7 +20,7 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px">
           <thead>
             <tr>
               <th>No</th>
@@ -36,14 +36,16 @@
             @foreach ($permintaans as $permintaan)
             <tr>
               <td>{{$loop->iteration}}</td>
-              <td>{{$permintaan->pemohon}}</td>
-              <td>{{$permintaan->kepada}}</td>
+              <td>{{$permintaan->pemohon_user->nama}}</td>
+              <td>{{$permintaan->kepada_user->nama}}</td>
               <td>{{$permintaan->nomor}}</td>
               <td>{{$permintaan->perihal}}</td>
               <td>{{$permintaan->status}}</td>
               <td>
                 <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
                     class="fas fa-eye"></i></a>
+                <a href="{{route('permintaan.ubah',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
+                    class="fas fa-edit"></i></a>
                 <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
                   @csrf
                   @method('delete')

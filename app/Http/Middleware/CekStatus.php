@@ -14,16 +14,12 @@ class CekStatus
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$roles)
     {
-        $user = User::where('username', $request->username)->first();
-        if ($user->status == 'ketua') {
-            return redirect('ketua');
-        } elseif ($user->status == 'staff') {
-            return redirect('staff');
-        } elseif ($user->status == 'bidang') {
-            return redirect('bidang');
+        if (in_array($request->user()->status, $roles)) {
+            return $next($request);
         }
-        return $next($request);
+
+        return redirect('/');
     }
 }
