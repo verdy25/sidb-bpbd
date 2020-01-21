@@ -42,8 +42,8 @@
         @foreach ($details as $key => $detail)
         <tr>
             <td>{{$key+1}}</td>
-            <td>{{$detail->barang->nama}}</td>
-            <td>{{$detail->barang->spesifikasi}}</td>
+            <td>{{Str::lower($detail->barang->nama)}} {{Str::lower($detail->barang->spesifikasi)}}</td>
+            <td>{{Str::lower($detail->barang->merk)}}</td>
             <td>{{$detail->volume}}</td>
             <td>{{$detail->barang->satuan}}</td>
             <td class="text-right">{{$detail->harga}}</td>

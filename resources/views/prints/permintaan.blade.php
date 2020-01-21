@@ -70,13 +70,15 @@
 		<tr>
 			<th>No</th>
 			<th>Nama Barang</th>
+			<th>Merk</th>
 			<th>Volume</th>
 			<th>Satuan</th>
 		</tr>
 		@foreach ($details as $key => $detail)
 		<tr>
 			<td class="center">{{$key+1}}</td>
-			<td>{{$detail->barang->nama}}</td>
+			<td>{{Str::lower($detail->barang->nama)}} {{Str::lower($detail->barang->spesifikasi)}}</td>
+			<td>{{Str::lower($detail->barang->merk)}}</td>
 			<td class="center">{{$detail->jumlah}}</td>
 			<td class="center">{{$detail->barang->satuan}}</td>
 		</tr>

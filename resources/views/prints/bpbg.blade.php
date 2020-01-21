@@ -60,9 +60,10 @@
 	<br>
 	<table style="width: 100%;">
 		<tr>
-			<th>Tanggal Penyeraham barang Menurut Permintaan</th>
+			<th>Tanggal Penyerahan barang Menurut Permintaan</th>
 			<th>Barang diterima dari Gudang</th>
 			<th>Nama Barang</th>
+			<th>Merk</th>
 			<th>Satuan</th>
 			<th>Volume</th>
 			<th>Harga Satuan</th>
@@ -72,7 +73,8 @@
 		<tr>
 			<td>{{$tanggal}}</td>
 			<td>{{$tanggal}}</td>
-			<td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
+			<td>{{Str::lower($detail->barang->nama)}} {{Str::lower($detail->barang->spesifikasi)}}</td>
+			<td>{{Str::lower($detail->barang->merk)}}</td>
 			<td class="center">{{$detail->barang->satuan}}</td>
 			<td class="center">{{$detail->jumlah}}</td>
 			<td style="text-align: right;">{{$harga_satuan[$key]}}</td>
