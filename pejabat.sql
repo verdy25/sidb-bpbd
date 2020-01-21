@@ -97,9 +97,9 @@ VALUES
 );
 
 /* INSERT QUERY NO: 15 */
-INSERT INTO pejabat_barangs(nip, nama, jabatan, id_bidang)
+INSERT INTO pejabat_barangs(nip, nama, jabatan)
 VALUES
 (
-'196208071987031012', 'SAIFUL HIDAYAT', 'Pelaksana', 
+'196208071987031012', 'SAIFUL HIDAYAT', 'Pelaksana'
 );
 

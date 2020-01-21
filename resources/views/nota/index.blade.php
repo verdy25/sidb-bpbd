@@ -50,16 +50,18 @@
                 </a></td>
               <td>{{$nota->penanda_tangan}}</td>
               <td><a href="{{route('nota.show', $nota->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+                @if (Auth::user()->status != "bidang")
                 <form action="{{route('nota.destroy', $nota->id)}}" method="POST" class="d-inline">
                   @csrf
                   @method('delete')
                   <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                </form>
+                </form>  
+                @endif
               </td>
               <!-- Modal -->
               <div class="modal fade" id="pihak_ketiga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Detail {{$nota->pihak_ketiga}}</h5>
@@ -69,14 +71,14 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="nama_perwakilan">Nama</label>
-                          <input type="text" class="form-control" id="nama_perwakilan"
+                        <div class="form-group col-md-12">
+                          <label for="nama_perwakilan">Nama :</label>
+                          <input type="text" class="form-control-plaintext" id="nama_perwakilan"
                             value="{{$nota->nama_perwakilan}}" readonly>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="jabatan">Jabatan</label>
-                          <input type="text" class="form-control" readonly id="jabatan"
+                        <div class="form-group col-md-12">
+                          <label for="jabatan">Jabatan :</label>
+                          <input type="text" class="form-control-plaintext" readonly id="jabatan"
                             value="{{$nota->jabatan_perwakilan}}">
                         </div>
                       </div>
@@ -90,7 +92,7 @@
               <!-- Modal Program -->
               <div class="modal fade" id="program" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Detail Program {{$nota->program}}</h5>

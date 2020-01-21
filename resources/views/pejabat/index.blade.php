@@ -23,9 +23,11 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Pejabat barang</h6>
+      @if (Auth::user()->status != "bidang")
       <button class="btn btn-primary btn-sm" data-target="#tambah_barang" data-toggle="modal"><i
           class="fas fa-plus"></i>
         Pejabat</button>
+      @endif
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -35,8 +37,10 @@
               <th>NIP</th>
               <th>Nama</th>
               <th>Jabatan</th>
+              @if (Auth::user()->status != "bidang")
               <th>Ubah</th>
               <th>Hapus</th>
+              @endif
             </tr>
           </thead>
           <tbody>
@@ -45,6 +49,7 @@
               <td>{{$pejabat->nip}}</td>
               <td>{{$pejabat->nama}}</td>
               <td>{{$pejabat->jabatan}}</td>
+              @if (Auth::user()->status != "bidang")
               <td>
                 <a href="{{route('pejabat.edit', $pejabat->id)}}" class="btn btn-sm btn-primary" title="Ubah data"><i
                     class="fas fa-edit"></i></a>
@@ -57,6 +62,7 @@
                       class="fas fa-trash"></i></button>
                 </form>
               </td>
+              @endif
             </tr>
             @endforeach
           </tbody>

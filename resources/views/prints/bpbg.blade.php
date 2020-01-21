@@ -74,7 +74,7 @@
 			<td>{{$tanggal}}</td>
 			<td>{{$tanggal}}</td>
 			<td>{{Str::lower($detail->barang->nama)}} {{Str::lower($detail->barang->spesifikasi)}}</td>
-			<td>{{Str::lower($detail->barang->merk)}}</td>
+			<td class="center">{{Str::lower($detail->barang->merk)}}</td>
 			<td class="center">{{$detail->barang->satuan}}</td>
 			<td class="center">{{$detail->jumlah}}</td>
 			<td style="text-align: right;">{{$harga_satuan[$key]}}</td>

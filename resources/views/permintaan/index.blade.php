@@ -44,6 +44,7 @@
               <td>
                 <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
                     class="fas fa-eye"></i></a>
+                @if ($permintaan->status == "Belum disetujui")
                 <a href="{{route('permintaan.ubah',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
                     class="fas fa-edit"></i></a>
                 <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
@@ -51,6 +52,7 @@
                   @method('delete')
                   <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                 </form>
+                @endif
               </td>
             </tr>
             @endforeach

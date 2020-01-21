@@ -42,7 +42,7 @@
               <th>No</th>
               <th>Nota Permintaan</th>
               <th>Surat Perintah Pengeluaran</th>
-              <th>Bukti Pengambilan</th>
+              <th>Bukti Pengambilan</th>              
               <th>Aksi</th>
             </tr>
           </thead>
@@ -68,6 +68,7 @@
               <td>
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                   <div class="btn-group" role="group">
+                    @if (Auth::user()->status != "bidang")
                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Buat
                     </button>
@@ -80,7 +81,7 @@
                       @endif
                     </div>
                   </div>
-                
+                  @endif
                   <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Cetak
