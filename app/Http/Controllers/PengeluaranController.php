@@ -119,7 +119,7 @@ class PengeluaranController extends Controller
             'nomor_keluar' => $request->nomor
         ]);
 
-        return redirect()->route('pengeluaran.index')->with('success', 'Surat Perintah Pengeluaran / Penyaluran Barang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+        return redirect()->route('pengeluaran.index')->with('success', 'Surat Perintah Pengeluaran / Penyaluran Barang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah diubah');
     }
 
     public function bpbg_update(Request $request, $id)
@@ -134,7 +134,7 @@ class PengeluaranController extends Controller
             'penyerah_user' => $request->pejabat
         ]);
 
-        return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+        return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah diubah');
     }
 
     public function sppb_print($id)
