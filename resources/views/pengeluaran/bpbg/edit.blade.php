@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="nomor">Nomor Bukti Pengambilan Barang dari Gudang</label>
                     <input type="text" class="form-control" id="nomor" name="nomor"
-                        value="{{ $pengeluaran->nomor_ambil }}" disabled>
+                        value="{{ $pengeluaran->nomor_ambil }}">
                 </div>
                 <div class="form-group">
                     <label for="kepada">Yang Menyerahkan</label>

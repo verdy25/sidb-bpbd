@@ -16,10 +16,10 @@ class CreatePengeluaransTable extends Migration
         Schema::create('pengeluarans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_permintaan');
-            $table->string('nomor_keluar')->unique()->nullable();
+            $table->string('nomor_keluar')->nullable();
             $table->string('dari')->nullable();
             $table->string('kepada')->nullable();
-            $table->string('nomor_ambil')->unique()->nullable();
+            $table->string('nomor_ambil')->nullable();
             $table->unsignedBigInteger('penyerah_user')->nullable();
             $table->unsignedBigInteger('kepada_user')->nullable();
             $table->string('keterangan')->nullable();

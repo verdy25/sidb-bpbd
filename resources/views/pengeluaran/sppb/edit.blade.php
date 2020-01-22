@@ -27,7 +27,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="nomor">Nomor Surat Perintah Pengeluaran / Penyaluran Barang</label>                    
-                    <input type="text" class="form-control" @if($pengeluaran->nomor_keluar != null) disabled @else name="nomor" @endif id="nomor"
+                    <input type="text" class="form-control" name="nomor" id="nomor"
                         value="{{ $pengeluaran->nomor_keluar }}">
                 </div>
                 <div class="form-group">

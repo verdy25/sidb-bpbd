@@ -17,7 +17,7 @@ class CreatePermintaansTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('kepada');
             $table->unsignedBigInteger('pemohon');
-            $table->string('nomor')->unique();
+            $table->string('nomor');
             $table->string('perihal'); 
             $table->string('status');
             $table->timestamps();

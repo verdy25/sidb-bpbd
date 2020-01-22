@@ -51,7 +51,7 @@ class PengeluaranController extends Controller
     public function sppb_store(Request $request, $id)
     {
         $request->validate([
-            'nomor' => 'required|unique:pengeluarans,nomor_keluar',
+            'nomor' => 'required',
             'kepada' => 'required',
             'dari' => 'required',
             'penandatangan' => 'required'
@@ -76,7 +76,7 @@ class PengeluaranController extends Controller
     public function bpbg_store(Request $request, $id)
     {
         $request->validate([
-            'nomor' => 'required|unique:pengeluarans,nomor_ambil',
+            'nomor' => 'required',
             'pejabat' => 'required'
         ]);
 
@@ -106,7 +106,8 @@ class PengeluaranController extends Controller
         $request->validate([
             'kepada' => 'required',
             'dari' => 'required',
-            'pejabat' => 'required'
+            'pejabat' => 'required',
+            'nomor' => 'required'
         ]);
 
         $pengeluaran = Pengeluaran::findOrFail($id);
@@ -114,7 +115,8 @@ class PengeluaranController extends Controller
         $pengeluaran->update([
             'kepada' => $request->kepada,
             'dari' => $request->dari,
-            'kepada_user' => $request->pejabat
+            'kepada_user' => $request->pejabat,
+            'nomor_keluar' => $request->nomor
         ]);
 
         return redirect()->route('pengeluaran.index')->with('success', 'Surat Perintah Pengeluaran / Penyaluran Barang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
@@ -166,7 +168,7 @@ class PengeluaranController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nomor_keluar' => 'nullable|unique:pengeluarans,nomor_keluar'
+            'nomor_keluar' => 'nullable'
         ]);
 
         Pengeluaran::where('id', $id)->update([
@@ -179,7 +181,7 @@ class PengeluaranController extends Controller
     public function bukti_ambil(Request $request, $id)
     {
         $request->validate([
-            'nomor_ambil' => 'nullable|unique:pengeluarans,nomor_ambil'
+            'nomor_ambil' => 'nullable'
         ]);
 
         Pengeluaran::where('id', $id)->update([

@@ -61,7 +61,7 @@ class PermintaanController extends Controller
             [
                 'kepada' => 'required',
                 'pemohon' => 'required',
-                'nomor' => 'required|unique:permintaans,nomor',
+                'nomor' => 'required',
                 'perihal' => 'required',
                 'barang.*' => 'required',
                 'jumlah.*' => 'required'
@@ -134,7 +134,8 @@ class PermintaanController extends Controller
             [
                 'kepada' => 'required',
                 'pemohon' => 'required',
-                'nomor' => "required|unique:permintaans,nomor, $id",
+                'nomor' => 'required',
+                // 'nomor' => "required|unique:permintaans,nomor, $id",
                 'perihal' => 'required',
                 'barang.*' => 'required',
                 'jumlah.*' => 'required'
