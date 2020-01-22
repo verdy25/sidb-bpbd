@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bidang;
 use App\PejabatBarang;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class PejabatController extends Controller
     public function index()
     {
         $pejabats = PejabatBarang::all();
-        return view('pejabat.index', compact('pejabats'));
+        $bidangs = Bidang::all();
+        return view('pejabat.index', compact('pejabats', 'bidangs'));
     }
 
     /**
@@ -29,13 +31,15 @@ class PejabatController extends Controller
         $request->validate([
             'nip' => 'required',
             'nama' => 'required',
-            'jabatan' => 'required'
+            'jabatan' => 'required',
+            'id_bidang' => 'nullable'
         ]);
 
         PejabatBarang::create([
             'nip' => $request->nip,
             'nama' => $request->nama,
-            'jabatan' => $request->jabatan
+            'jabatan' => $request->jabatan,
+            'id_bidang' => $request->bidang
         ]);
 
         return redirect()->route('pejabat.index')->with('success', "Pejabat baru $request->nama berhasil ditambahkan");
@@ -61,7 +65,8 @@ class PejabatController extends Controller
     public function edit($id)
     {
         $pejabat = PejabatBarang::find($id);
-        return view('pejabat.edit', compact('pejabat'));
+        $bidangs = Bidang::all();
+        return view('pejabat.edit', compact('pejabat', 'bidangs'));
     }
 
     /**
@@ -82,7 +87,8 @@ class PejabatController extends Controller
         PejabatBarang::where('id', $id)->update([
             'nip' => $request->nip,
             'nama' => $request->nama,
-            'jabatan' => $request->jabatan
+            'jabatan' => $request->jabatan,
+            'id_bidang' => $request->bidang
         ]);
         return redirect()->route('pejabat.index')->with('success', "Data pejabat $request->nama telah diperbarui");
     }

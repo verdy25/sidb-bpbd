@@ -99,6 +99,17 @@
             <label for="jabatan">Jabatan</label>
             <input type="text" name="jabatan" id="jabatan" class="form-control" placeholder="Masukkan jabatan">
           </div>
+          <div class="form-group">
+            <label for="bidang">Bidang</label>
+            <select name="bidang" id="bidang" class="form-control">
+              <option>Pilih bidang</option>
+              @foreach ($bidangs as $item)
+              @if ($item->id != 1)
+              <option value="{{$item->id}}">{{$item->nama}}</option>
+              @endif
+              @endforeach
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

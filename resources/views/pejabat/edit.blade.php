@@ -40,6 +40,19 @@
             <input type="text" name="jabatan" class="form-control" id="jabatan" value="{{$pejabat->jabatan}}">
           </div>
         </div>
+        <div class="form-group row">
+          <label for="bidang" class="col-sm-2 col-form-label">Bidang</label>
+          <div class="col-sm-10">
+            <select name="bidang" id="bidang" class="form-control">
+              <option value="{{$pejabat->id_bidang}}">{{$pejabat->bidang->nama}}</option>
+              @foreach ($bidangs as $item)
+              @if ($item->id != 1 && $pejabat->id_bidang != $item->id)
+              <option value="{{$item->id}}">{{$item->nama}}</option>
+              @endif
+              @endforeach
+            </select>
+          </div>
+        </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
       </form>
     </div>
