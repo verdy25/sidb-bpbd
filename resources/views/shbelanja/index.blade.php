@@ -31,10 +31,10 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Standar Satuan Harga Belanja</h6>
       <div class="btn-group" role="group" aria-label="Button add data">
-        <button class="btn btn-info btn-sm" data-target="#import" data-toggle="modal"><i class="fas fa-file-upload"></i>
+        <button class="btn btn-primary btn-sm" data-target="#import" data-toggle="modal"><i class="fas fa-file-upload"></i>
           Import</button>
-        {{-- <button class="btn btn-primary btn-sm" data-target="#add" data-toggle="modal"><i class="fas fa-plus"></i>
-          Barang</button> --}}
+        {{-- <a class="btn btn-info btn-sm" href=""><i class="fas fa-question"></i>
+          Panduan</a> --}}
       </div>
 
     </div>

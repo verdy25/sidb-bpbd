@@ -12,6 +12,7 @@ use App\Http\Controllers\Helpers as help;
 use PDF;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermintaanController extends Controller
 {
@@ -22,7 +23,15 @@ class PermintaanController extends Controller
      */
     public function index()
     {
-        $permintaans = Permintaan::orderby('created_at', 'DESC')->get();
+        $permintaans = [];
+        if (Auth::user()->status == 'bidang') {
+            //SELECT * FROM permintaans WHERE pemohon in (SELECT id FROM pejabat_barangs WHERE id_bidang = 3)
+            $permintaans = Permintaan::whereIn('pemohon', function ($query) {
+                $query->select('id')->from('pejabat_barangs')->where('id_bidang', Auth::user()->id_bidang);
+            })->orderby('created_at', 'DESC')->get();
+        } else {
+            $permintaans = Permintaan::orderby('created_at', 'DESC')->get();
+        }
         return view('permintaan.index', compact('permintaans'));
     }
 
@@ -146,7 +155,7 @@ class PermintaanController extends Controller
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
         for ($i = 0; $i < count($form); $i++) {
             $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
-            if ( $i >= count($detail_permintaan)) {
+            if ($i >= count($detail_permintaan)) {
                 DetailPermintaan::create([
                     'id_permintaan' => $id,
                     'id_barang' => $request->barang[$i],
@@ -159,7 +168,7 @@ class PermintaanController extends Controller
                 ]);
             }
         }
-        return redirect()->route('permintaan.index')->with('success', 'Permintaan nomor '.$permintaan->nomor.' berhasil diubah');
+        return redirect()->route('permintaan.index')->with('success', 'Permintaan nomor ' . $permintaan->nomor . ' berhasil diubah');
     }
 
     /**
