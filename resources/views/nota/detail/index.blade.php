@@ -13,7 +13,7 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Nota #{{$nota->id}} -
         {{date('d F Y', strtotime($nota->created_at))}}</h6>
-      <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $nota->id)}}"><i class="fas fa-print"></i>
+      <a class="btn btn-primary btn-sm" href="{{route('cetak.pengajuan', $nota->id)}}" target="_blank"><i class="fas fa-print"></i>
         Cetak</a>
     </div>
     <div class="card-body">
@@ -34,12 +34,13 @@
         </div>
       </form>
       <div class="table-responsive">
-        <table class="table table-bordered" width="100%" cellspacing="0">
+        <table class="table table-bordered" width="100%" cellspacing="0" style="font-size: 14px;">
           <thead>
             <tr>
               <th>No</th>
               <th>Barang</th>
               <th>Merk</th>
+              <th>Spesifikasi</th>
               <th>Volume</th>
               <th>Satuan</th>
               <th>Harga Satuan (Rp)</th>
@@ -51,6 +52,7 @@
             <tr>
               <td>{{$key+1}}</td>
               <td>{{$detail->barang->nama}}</td>
+              <td>{{$detail->barang->merk}}</td>
               <td>{{$detail->barang->spesifikasi}}</td>
               <td>{{$detail->volume}}</td>
               <td>{{$detail->barang->satuan}}</td>
@@ -63,7 +65,7 @@
             @endforeach
           </tbody>
           <tfoot>
-            <td class="text-right" colspan="6"><strong>Total</strong></td>
+            <td class="text-right" colspan="7"><strong>Total</strong></td>
             <td class="text-right">@currency($total)</td>
           </tfoot>
         </table>

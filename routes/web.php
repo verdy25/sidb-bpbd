@@ -46,7 +46,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/permintaan/create', 'PermintaanController@create')->name('permintaan.create');
     Route::post('/permintaan', 'PermintaanController@store')->name('permintaan.store');
     Route::get('/permintaan/{id}', 'PermintaanController@show')->name('permintaan.show');
-    Route::put('/permintaan/ubah/{id}', 'PermintaanController@update_permintaan')->name('persetujuan.update');
+    Route::put('/permintaan/ubah/{id}', 'PermintaanController@update_permintaan')->name('permintaan.update');
     Route::delete('/permintaan/{id}', 'PermintaanController@destroy')->name('permintaan.destroy');
     Route::get('/permintaan/ubah/{id}', 'PermintaanController@ubah')->name('permintaan.ubah');
 
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/pengeluaran/sppb/{id}/cetak', 'PengeluaranController@sppb_print')->name('cetak.sppb');
     Route::get('/permintaan/bpbg/{id}/cetak', 'PengeluaranController@bpbg_print')->name('cetak.bpbg');
 
-    Route::group(['middleware' => 'cekstatus:sekretaris,kepala,admin'], function () {       
+    Route::group(['middleware' => 'cekstatus:sekretariat,kepala,admin'], function () {       
 
         // persetujuan
         Route::get('/permintaan/verif/{id}', 'PermintaanController@edit')->name('permintaan.verif');
@@ -81,14 +81,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::put('/pengeluaran/{id}/bpbg', 'PengeluaranController@bpbg_update')->name('bpbg.update');
     });
 
-    Route::group(['middleware' => 'cekstatus:sekretaris,admin'], function () {
+    Route::group(['middleware' => 'cekstatus:sekretariat,admin'], function () {
 
         //pejabat
         Route::post('/pejabat', 'PejabatController@store')->name('pejabat.store');
         Route::get('/pejabat/{id}', 'PejabatController@show')->name('pejabat.show');
+        Route::get('/pejabat/{id}/edit', 'PejabatController@edit')->name('pejabat.edit');
         Route::put('/pejabat/{id}', 'PejabatController@update')->name('pejabat.update');
         Route::delete('/pejabat/{id}', 'PejabatController@destroy')->name('pejabat.destroy');
-        Route::get('/pejabat/{id}/edit', 'PejabatController@show')->name('pejabat.show');
 
     });
 });

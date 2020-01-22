@@ -17,7 +17,7 @@
         </ul>
     </div>
     @endif
-    <form action="{{route('persetujuan.update', $permintaan->id)}}" method="POST">
+    <form action="{{route('permintaan.update', $permintaan->id)}}" method="POST">
         @csrf
         @method('put')
         <div class="card shadow mb-4">

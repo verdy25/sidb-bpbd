@@ -24,10 +24,10 @@
           <thead>
             <tr>
               <th>No</th>
+              <th>Bidang</th>
               <th>Pemohon</th>
-              <th>Kepada</th>
+              {{-- <th>Kepada</th> --}}
               <th>Nomor permintaan</th>
-              <th>Perihal</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
@@ -36,10 +36,10 @@
             @foreach ($permintaans as $permintaan)
             <tr>
               <td>{{$loop->iteration}}</td>
+              <td>{{$permintaan->pemohon_user->bidang->nama}}</td>
               <td>{{$permintaan->pemohon_user->nama}}</td>
-              <td>{{$permintaan->kepada_user->nama}}</td>
+              {{-- <td>{{$permintaan->kepada_user->nama}}</td> --}}
               <td>{{$permintaan->nomor}}</td>
-              <td>{{$permintaan->perihal}}</td>
               <td>{{$permintaan->status}}</td>
               <td>
                 <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i

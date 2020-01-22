@@ -18,9 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->unsignedBigInteger('id_bidang');
             $table->string('status');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_bidang')->references('id')->on('bidangs');
         });
     }
 

@@ -159,7 +159,7 @@ class PermintaanController extends Controller
                 ]);
             }
         }
-        return back()->with('success', 'Permintaan nomor '.$permintaan->nomor.' berhasil diubah');
+        return redirect()->route('permintaan.index')->with('success', 'Permintaan nomor '.$permintaan->nomor.' berhasil diubah');
     }
 
     /**

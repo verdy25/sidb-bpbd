@@ -18,7 +18,7 @@
           Cetak</a>
 
         @if ($permintaan->status == 'Belum disetujui')
-        @if (Auth::user()->status != "bidang")
+        @if (Auth::user()->status == "kepala")
         <a href="{{route('permintaan.verif', $permintaan->id)}}" class="btn btn-sm btn-primary">Buat persetujuan</a>
         @endif
         @endif
@@ -53,6 +53,7 @@
             <tr>
               <th>No</th>
               <th>Barang</th>
+              <th>Merk</th>
               <th>Jumlah</th>
               <th>Satuan</th>
             </tr>
@@ -61,7 +62,8 @@
             @foreach ($detail_permintaan as $key => $detail)
             <tr>
               <td>{{$key+1}}</td>
-              <td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
+              <td>{{$detail->barang->nama}}</td>
+              <td>{{$detail->barang->merk}}</td>
               <td>{{$detail->jumlah}}</td>
               <td>{{$detail->barang->satuan}}</td>
             </tr>
@@ -76,9 +78,9 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Persetujuan</h6>
-      @if ($permintaan->status != 'Barang telah diambil')
-      @if (Auth::user()->status != "bidang")
-      <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $permintaan->pengeluaran->id)}}"><i
+      @if (Auth::user()->status == "kepala")
+      @if ($permintaan->status != "Barang telah diambil" && $permintaan->status != "Surat perintah pengeluaran barang telah keluar")
+      <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $pengeluaran->id)}}"><i
           class="fas fa-edit"></i>
         Ubah persetujuan</a>
       @endif
@@ -113,6 +115,7 @@
             <tr>
               <th>No</th>
               <th>Barang</th>
+              <th>Merk</th>
               <th>Jumlah</th>
               <th>Satuan</th>
             </tr>
@@ -121,7 +124,8 @@
             @foreach ($detail_pengeluaran as $key => $detail)
             <tr>
               <td>{{$key+1}}</td>
-              <td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
+              <td>{{$detail->barang->nama}}</td>
+              <td>{{$detail->barang->merk}}</td>
               <td>{{$detail->jumlah}}</td>
               <td>{{$detail->barang->satuan}}</td>
             </tr>
@@ -129,14 +133,12 @@
           </tbody>
         </table>
         <div class="form-group">
-          <label><b>Keterangan</b></label>
-          <textarea rows="3" class="form-control-plaintext" disabled>
+          <label><b>Keterangan</b> : <br>
             @if ($pengeluaran->keterangan == null)
-                Tidak ada keterangan
+            Tidak ada keterangan
             @else
-                {{$pengeluaran->keterangan}}
+            {{$pengeluaran->keterangan}}</label>
             @endif
-          </textarea>
         </div>
       </div>
     </div>
@@ -169,6 +171,7 @@
             <tr>
               <th>No</th>
               <th>Barang</th>
+              <th>Merk</th>
               <th>Jumlah</th>
               <th>Satuan</th>
             </tr>
@@ -177,7 +180,8 @@
             @foreach ($detail_pengeluaran as $key => $detail)
             <tr>
               <td>{{$key+1}}</td>
-              <td>{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
+              <td>{{$detail->barang->nama}}</td>
+              <td>{{$detail->barang->merk}}</td>
               <td>{{$detail->jumlah}}</td>
               <td>{{$detail->barang->satuan}}</td>
             </tr>

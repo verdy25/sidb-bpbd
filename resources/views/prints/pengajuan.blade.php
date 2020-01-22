@@ -8,18 +8,33 @@
 
 <body>
     <style type="text/css">
-        body {
-            font-size: 9pt;
-        }
+       body {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 12px;
+		}
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+		table,
+		td,
+		th {
+			border: 1px solid black;
+		}
 
-        th {
-            height: 50px;
-        }
+		.no-border{
+			border: none;
+		}   
+
+		table {
+			border-collapse: collapse;
+		}
+
+		th {
+			height: 20px;
+			text-align: center;
+		}
+
+		.center {
+			text-align: center;
+		}
     </style>
     <header style="margin-left: 60%; margin-top:3cm">
         <p>Banyuwangi, {{$tanggal}}<br />

@@ -48,7 +48,7 @@
                 </a></td>
               <td><a href="" data-target="#program" data-toggle="modal">{{$nota->program}}
                 </a></td>
-              <td>{{$nota->penanda_tangan}}</td>
+              <td>{{$nota->penerima->nama}}</td>
               <td><a href="{{route('nota.show', $nota->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
                 @if (Auth::user()->status != "bidang")
                 <form action="{{route('nota.destroy', $nota->id)}}" method="POST" class="d-inline">
