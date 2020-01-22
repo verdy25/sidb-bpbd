@@ -40,7 +40,7 @@
                         <label for="pemohon">Pemohon</label>
                         <select class="custom-select" id="pemohon" name="pemohon">
                             <option></option>
-                            @foreach ($pejabat as $p)
+                            @foreach ($pejabat_bidang as $p)
                             @if ($p->bidang != null)
                             <option value="{{$p->id}}">{{$p->nama}}</option>
                             @endif
@@ -97,20 +97,6 @@
                         <button class="btn btn-primary btn-add" type="button"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
-                {{-- <div class="input-group control-group increment">
-                    <input type="file" name="filename[]" class="form-control">
-                    <div class="input-group-btn">
-                        <button class="btn btn-success" type="button"><i class="fas fa-plus"></i>Add</button>
-                    </div>
-                </div>
-                <div class="clone d-none">
-                    <div class="control-group input-group" style="margin-top:10px">
-                        <input type="file" name="filename[]" class="form-control">
-                        <div class="input-group-btn">
-                            <button class="btn btn-danger" type="button"><i class="fas fa-remove"></i> Remove</button>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit">Simpan</button>
                 </div>

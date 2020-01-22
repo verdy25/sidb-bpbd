@@ -76,7 +76,7 @@
                       @if ($p->nomor_keluar == null)
                       <a class="dropdown-item" href="{{route('sppb.create', $p->id)}}">SPPB</a>
                       @endif
-                      @if ($p->nomor_ambil == null)
+                      @if ($p->nomor_ambil == null && $p->nomor_keluar != null)
                       <a class="dropdown-item" href="{{route('bpbg.create', $p->id)}}">BPBG</a>
                       @endif
                     </div>

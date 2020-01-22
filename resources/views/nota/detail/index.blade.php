@@ -23,7 +23,7 @@
         <div class="form-group col-6">
           <label class="mr-sm-2" for="inlineFormCustomSelect">Penerima</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="penerima">
-            <option>{{$nota->penerima->nama}}</option>
+            <option value="{{$nota->penanda_tangan}}">{{$nota->penerima->nama}}</option>
             @foreach ($pejabat as $item)
             @if ($item->id != $nota->penanda_tangan)
             <option value="{{$item->id}}">{{$item->nama}}</option>

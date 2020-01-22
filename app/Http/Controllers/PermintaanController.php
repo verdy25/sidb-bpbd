@@ -28,9 +28,9 @@ class PermintaanController extends Controller
             //SELECT * FROM permintaans WHERE pemohon in (SELECT id FROM pejabat_barangs WHERE id_bidang = 3)
             $permintaans = Permintaan::whereIn('pemohon', function ($query) {
                 $query->select('id')->from('pejabat_barangs')->where('id_bidang', Auth::user()->id_bidang);
-            })->orderby('created_at', 'DESC')->get();
+            })->orderby('id', 'DESC')->get();
         } else {
-            $permintaans = Permintaan::orderby('created_at', 'DESC')->get();
+            $permintaans = Permintaan::orderby('id', 'DESC')->get();
         }
         return view('permintaan.index', compact('permintaans'));
     }
@@ -45,7 +45,8 @@ class PermintaanController extends Controller
         $barang = Barang::where('stok', '>', 0)->get();
         // $barang = Barang::all();
         $pejabat = PejabatBarang::all();
-        return view('permintaan.create', compact('barang', 'pejabat'));
+        $pejabat_bidang = PejabatBarang::where('id_bidang', Auth::user()->id_bidang)->get();
+        return view('permintaan.create', compact('barang', 'pejabat', 'pejabat_bidang'));
     }
 
     /**
@@ -103,13 +104,14 @@ class PermintaanController extends Controller
     public function show($id)
     {
         $permintaan = Permintaan::findOrFail($id);
+        $pejabat_bidang = PejabatBarang::where('id_bidang', Auth::user()->id_bidang)->get();
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();
         $pengeluaran = Pengeluaran::where('id_permintaan', $id)->first();
         $detail_pengeluaran = [];
         if ($pengeluaran != null) {
             $detail_pengeluaran = DetailPengeluaran::where('id_pengeluaran', $pengeluaran->id)->get();
         }
-        return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan', 'detail_pengeluaran', 'pengeluaran'));
+        return view('permintaan.detail.index', compact('permintaan', 'detail_permintaan', 'detail_pengeluaran', 'pengeluaran', 'pejabat_bidang'));
     }
 
     public function ubah($id)

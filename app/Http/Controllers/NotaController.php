@@ -7,7 +7,7 @@ use App\DetailNota;
 use App\Nota;
 use App\PejabatBarang;
 use App\SHBelanja;
-use App\Http\Controllers\Helpers as help; 
+use App\Http\Controllers\Helpers as help;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -20,7 +20,7 @@ class NotaController extends Controller
      */
     public function index()
     {
-        $notas = Nota::orderby('created_at', 'DESC')->get();;
+        $notas = Nota::orderBy('id', 'DESC')->get();;
         return view('nota.index', compact('notas'));
     }
 
@@ -142,11 +142,15 @@ class NotaController extends Controller
             'penerima' => 'required'
         ]);
 
-        Nota::where('id', $id)->update([
-            'penanda_tangan' => $request->penerima
-        ]);
-
-        return back()->with('success', 'Penerima berhasil dirubah');
+        $nota = Nota::findOrFail($id);
+        if ($request->penerima != $nota->penanda_tangan) {
+            $nota->update([
+                'penanda_tangan' => $request->penerima
+            ]);
+            return back()->with('success', 'Penerima berhasil dirubah');
+        } else {
+            return back();
+        }
     }
 
     /**
@@ -192,7 +196,7 @@ class NotaController extends Controller
         $data = [];
         if ($request->has('q')) {
             $cari = $request->q;
-            $data = SHBelanja::select('id', 'nama_barang')->where('nama_barang', 'LIKE', '%'.$cari.'%')->get();
+            $data = SHBelanja::select('id', 'nama_barang')->where('nama_barang', 'LIKE', '%' . $cari . '%')->get();
         }
         return response()->json($data);
     }

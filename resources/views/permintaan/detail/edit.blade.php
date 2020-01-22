@@ -41,8 +41,8 @@
                         <label for="pemohon">Pemohon</label>
                         <select class="custom-select" id="pemohon" name="pemohon">
                             <option value="{{$permintaan->pemohon}}">{{$permintaan->pemohon_user->nama}}</option>
-                            @foreach ($pejabat as $p)
-                            @if ($permintaan->kepada != $p->id)
+                            @foreach ($pejabat_bidang as $p)
+                            @if ($permintaan->pemohon != $p->id)
                             <option value="{{$p->id}}">{{$p->nama}}</option>
                             @endif
                             @endforeach
