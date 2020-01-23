@@ -27,20 +27,18 @@
       <i class="fas fa-fw fa-table"></i>
       <span>Standar Harga Belanja</span></a>
   </li>
-  
-  @if (Auth::user()->status != "bidang")
+
   <li class="nav-item">
     <a class="nav-link" href="{{route('nota.index')}}">
       <i class="fas fa-fw fa-table"></i>
       <span>Nota Pengiriman Barang</span></a>
   </li>
-
+  
   <li class="nav-item">
     <a class="nav-link" href="{{route('gudang')}}">
       <i class="fas fa-fw fa-table"></i>
       <span>Stok barang</span></a>
   </li>
-  @endif
 
   <li class="nav-item">
     <a class="nav-link" href="{{route('permintaan.index')}}">

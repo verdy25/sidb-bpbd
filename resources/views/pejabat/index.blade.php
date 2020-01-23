@@ -38,7 +38,7 @@
               <th>Nama</th>
               <th>Jabatan</th>
               @if (Auth::user()->status != "bidang")
-              <th>Ubah</th>
+              <th>Edit</th>
               <th>Hapus</th>
               @endif
             </tr>

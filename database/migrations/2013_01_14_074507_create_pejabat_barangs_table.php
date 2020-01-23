@@ -19,6 +19,7 @@ class CreatePejabatBarangsTable extends Migration
             $table->string('nama');
             $table->string('jabatan');
             $table->unsignedBigInteger('id_bidang')->nullable();
+            $table->integer('aktif');
             $table->timestamps();
 
             $table->foreign('id_bidang')->references('id')->on('bidangs');

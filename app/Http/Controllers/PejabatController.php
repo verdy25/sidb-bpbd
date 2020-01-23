@@ -15,7 +15,7 @@ class PejabatController extends Controller
      */
     public function index()
     {
-        $pejabats = PejabatBarang::all();
+        $pejabats = PejabatBarang::where('aktif', 1)->get();
         $bidangs = Bidang::all();
         return view('pejabat.index', compact('pejabats', 'bidangs'));
     }
@@ -39,7 +39,8 @@ class PejabatController extends Controller
             'nip' => $request->nip,
             'nama' => $request->nama,
             'jabatan' => $request->jabatan,
-            'id_bidang' => $request->bidang
+            'id_bidang' => $request->bidang,
+            'aktif' => 1
         ]);
 
         return redirect()->route('pejabat.index')->with('success', "Pejabat baru $request->nama berhasil ditambahkan");
@@ -101,7 +102,9 @@ class PejabatController extends Controller
      */
     public function destroy($id)
     {
-        PejabatBarang::destroy($id);
-        return redirect()->route('pejabat.index')->with('success', 'Data berhasil dihapus');
+        PejabatBarang::where('id', $id)->update([
+            'aktif' => 0
+        ]);
+        return redirect()->route('pejabat.index')->with('success', 'Pejabat berhasil dinonaktifkan');
     }
 }

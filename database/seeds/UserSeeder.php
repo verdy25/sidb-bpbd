@@ -16,35 +16,35 @@ class UserSeeder extends Seeder
                 [
                     'name' => 'Kepala BPBD',
                     'email' => 'kepala@bpbdbwi.com',
-                    'password' => bcrypt('20201010'),
+                    'password' => bcrypt('kepalabpbd'),
                     'status' => 'kepala',
                     'id_bidang' => 1
                 ],
                 [
                     'name' => 'Sekretaris BPBD',
                     'email' => 'sekretariat@bpbdbwi.com',
-                    'password' => bcrypt('20201011'),
+                    'password' => bcrypt('sekretariat'),
                     'status' => 'sekretariat',
                     'id_bidang' => 2
                 ],
                 [
                     'name' => 'Bidang Pencegahan dan Kesiapsiagaan',
                     'email' => 'bidangpk@bpbdbwi.com',
-                    'password' => bcrypt('20201012'),
+                    'password' => bcrypt('bidangpk'),
                     'status' => 'bidang',
                     'id_bidang' => 3
                 ],
                 [
                     'name' => 'Bidang Kedaruratan dan Logistik',
                     'email' => 'bidangkl@bpbdbwi.com',
-                    'password' => bcrypt('20201013'),
+                    'password' => bcrypt('bidangkl'),
                     'status' => 'bidang',
                     'id_bidang' => 4
                 ],
                 [
                     'name' => 'Bidang Rehabilitasi dan Rekonstruksi',
                     'email' => 'bidangrrk@bpbdbwi.com',
-                    'password' => bcrypt('20201014'),
+                    'password' => bcrypt('bidangrrk'),
                     'status' => 'bidang',
                     'id_bidang' => 5
                 ],

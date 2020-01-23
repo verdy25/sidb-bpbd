@@ -78,8 +78,12 @@
                 <td class="align-middle">{{$detail->barang->nama}} {{$detail->barang->merk}}</td>
                 <td class="align-middle">{{$detail->jumlah}}</td>
                 <td class="align-middle">{{$detail->barang->stok}}</td>
-                <td class="align-middle"><input type="text" class="form-control font-weight-bold" name="jumlah[]"
-                    value="{{$detail->jumlah}}">
+                <td class="align-middle">
+                  <input type="text" class="form-control font-weight-bold" name="jumlah[]"
+                    value="{{$detail->jumlah}}" 
+                    @if ($detail->permintaan->pemohon_user->id_bidang != 2)
+                        readonly
+                    @endif>
                   <input type="text" class="form-control" name="barang[]" value="{{$detail->id_barang}}" hidden>
                 </td>
                 <td class="align-middle">{{$detail->barang->satuan}}</td>
@@ -88,7 +92,7 @@
             </tbody>
           </table>
           <div class="form-group">
-            <label for="keterngan">Keterangan</label>
+            <label for="keterangan">Keterangan</label>
             <textarea name="keterangan" id="keterangan" rows="3" class="form-control"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Setujui</button>

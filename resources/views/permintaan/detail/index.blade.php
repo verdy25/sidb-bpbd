@@ -18,7 +18,7 @@
           Cetak</a>
 
         @if ($permintaan->status == 'Belum disetujui')
-        @if (Auth::user()->status == "kepala")
+        @if (Auth::user()->status == "kepala" || Auth::user()->status == "admin")
         <a href="{{route('permintaan.verif', $permintaan->id)}}" class="btn btn-sm btn-primary">Buat persetujuan</a>
         @endif
         @endif
@@ -33,6 +33,10 @@
         <tr>
           <td>Pemohon </td>
           <td> : {{$permintaan->pemohon}}</td>
+        </tr>
+        <tr>
+          <td>Bidang </td>
+          <td> : {{$permintaan->pemohon_user->bidang->nama}}</td>
         </tr>
         <tr>
           <td>Tanggal </td>
@@ -78,7 +82,7 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Persetujuan</h6>
-      @if (Auth::user()->status == "kepala")
+      @if (Auth::user()->status == "kepala" || Auth::user()->status == "admin")
       @if ($permintaan->status != "Barang telah diambil" && $permintaan->status != "Surat perintah pengeluaran barang telah keluar")
       <a class="btn btn-primary btn-sm" href="{{route('persetujuan.edit', $pengeluaran->id)}}"><i
           class="fas fa-edit"></i>
@@ -95,6 +99,10 @@
         <tr>
           <td>Pemohon </td>
           <td> : {{$permintaan->pemohon}}</td>
+        </tr>
+        <tr>
+          <td>Bidang </td>
+          <td> : {{$permintaan->pemohon_user->bidang->nama}}</td>
         </tr>
         <tr>
           <td>Tanggal </td>

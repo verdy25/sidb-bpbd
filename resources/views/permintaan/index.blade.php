@@ -44,7 +44,7 @@
               <td>
                 <a href="{{route('permintaan.show',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
                     class="fas fa-eye"></i></a>
-                @if ($permintaan->status == "Belum disetujui")
+                @if ($permintaan->status == "Belum disetujui" && Auth::user()->status != "bidang")
                 <a href="{{route('permintaan.ubah',$permintaan->id)}}" class="btn btn-primary btn-sm"><i
                     class="fas fa-edit"></i></a>
                 <form action="{{route('permintaan.destroy', $permintaan->id)}}" method="POST" class="d-inline">
@@ -63,62 +63,4 @@
   </div>
 </div>
 <!-- /.container-fluid -->
-
-<!-- Modal Add -->
-<!-- <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah barang</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="" method="POST">
-        @csrf
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="kepada">Kepada</label>
-            <input type="text" name="kepada" id="kepada" class="form-control" placeholder="Masukkan Nama">
-          </div>
-          <div class="form-group">
-            <label for="pemohon">Pemohon</label>
-            <input type="text" name="pemohon" id="pemohon" class="form-control" placeholder="Masukkan Nama Pemohon">
-          </div>
-          <div class="form-group">
-            <label for="nomor">Nomor</label>
-            <input type="text" name="nomor" id="nomor" class="form-control" placeholder="Masukkan Nomor Surat">
-          </div>
-          <div class="form-group">
-            <label for="perihal">Perihal</label>
-            <input type="text" name="perihal" id="perihal" class="form-control" placeholder="Masukkan Perihal">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div> -->
-
-<!-- Modal Import -->
-<!-- <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Import barang</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div> -->
 @endsection

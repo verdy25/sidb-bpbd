@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\DetailNota;
 use App\DetailPengeluaran;
 use App\DetailPermintaan;
 use App\PejabatBarang;
 use App\Pengeluaran;
 use App\Permintaan;
 use App\Http\Controllers\Helpers as help;
+use App\Nota;
+use Carbon\Carbon;
 use PDF;
 
 use Illuminate\Http\Request;
@@ -23,9 +26,8 @@ class PermintaanController extends Controller
      */
     public function index()
     {
-        $permintaans = [];
         if (Auth::user()->status == 'bidang') {
-            //SELECT * FROM permintaans WHERE pemohon in (SELECT id FROM pejabat_barangs WHERE id_bidang = 3)
+            //SELECT * FROM permintaans WHERE pemohon in (SELECT id FROM pejabat_barangs WHERE id_bidang = ?)
             $permintaans = Permintaan::whereIn('pemohon', function ($query) {
                 $query->select('id')->from('pejabat_barangs')->where('id_bidang', Auth::user()->id_bidang);
             })->orderby('id', 'DESC')->get();
@@ -42,11 +44,21 @@ class PermintaanController extends Controller
      */
     public function create()
     {
-        $barang = Barang::where('stok', '>', 0)->get();
-        // $barang = Barang::all();
-        $pejabat = PejabatBarang::all();
+        // $barang = Barang::where('stok', '>', 0)->get();
+        // SELECT * FROM barangs WHERE KODE IN (SELECT KODE_BARANG FROM detail_notas WHERE NOTA_ID IN (SELECT ID FROM notas WHERE ID_BIDANG = 3))
+        $barang = Barang::whereIn('kode', function ($query) {
+            $query->select('kode_barang')->from('detail_notas')->whereIn('nota_id', function ($query) {
+                $query->select('id')->from('notas')->where('id_bidang', Auth::user()->id_bidang);
+            });
+        })->where('stok', '>', 0)->get();
+
+        $nota = Nota::where('id_bidang', Auth::user()->id_bidang)->whereMonth('created_at', Carbon::now()->month)->whereNotIn('id', function ($query) {
+            $query->select('id_nota')->from('permintaans')->whereNotNull('id_nota');
+        })->get();
+
+        $pejabat = PejabatBarang::where('aktif', 1)->get();
         $pejabat_bidang = PejabatBarang::where('id_bidang', Auth::user()->id_bidang)->get();
-        return view('permintaan.create', compact('barang', 'pejabat', 'pejabat_bidang'));
+        return view('permintaan.create', compact('barang', 'pejabat', 'pejabat_bidang', 'nota'));
     }
 
     /**
@@ -57,42 +69,76 @@ class PermintaanController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->status == "bidang") {
+            $request->validate(
+                [
+                    'kepada' => 'required',
+                    'pemohon' => 'required',
+                    'nomor' => 'required',
+                    'perihal' => 'required',
+                    'nota' => 'required'
+                ]
+            );
 
-        $request->validate(
-            [
-                'kepada' => 'required',
-                'pemohon' => 'required',
-                'nomor' => 'required',
-                'perihal' => 'required',
-                'barang.*' => 'required',
-                'jumlah.*' => 'required'
-            ]
-        );
+            Permintaan::create(
+                [
+                    'kepada' => $request->kepada,
+                    'pemohon' => $request->pemohon,
+                    'nomor' => $request->nomor,
+                    'perihal' => $request->perihal,
+                    'status' => 'Belum disetujui',
+                    'created_at' => $request->tanggal,
+                    'id_nota' => $request->nota
+                ]
+            );
 
-        Permintaan::create(
-            [
-                'kepada' => $request->kepada,
-                'pemohon' => $request->pemohon,
-                'nomor' => $request->nomor,
-                'perihal' => $request->perihal,
-                'status' => 'Belum disetujui',
-                'created_at' => $request->tanggal
-            ]
-        );
 
-        $form = $request->volume;
+            $detail_nota = DetailNota::where('nota_id', $request->nota)->get();
+            foreach ($detail_nota as $value) {
+                DetailPermintaan::create([
+                    'id_permintaan' => Permintaan::get()->last()->id,
+                    'id_barang' => Barang::where('kode', $value->kode_barang)->first()->id,
+                    'jumlah' => $value->volume
+                ]);
+            }
 
-        for ($i = 0; $i < count($form); $i++) {
-            //    $s = Barang::find($request->barang[$i]);
-            $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
-            DetailPermintaan::create([
-                'id_permintaan' => Permintaan::get()->last()->id,
-                'id_barang' => $request->barang[$i],
-                'jumlah' => $volume,
-            ]);
+            return redirect()->route('permintaan.index')->with('success', 'Berhasil menambahkan permintaan');
+        } else {
+            $request->validate(
+                [
+                    'kepada' => 'required',
+                    'pemohon' => 'required',
+                    'nomor' => 'required',
+                    'perihal' => 'required',
+                    'barang.*' => 'required',
+                    'jumlah.*' => 'required'
+                ]
+            );
+
+            Permintaan::create(
+                [
+                    'kepada' => $request->kepada,
+                    'pemohon' => $request->pemohon,
+                    'nomor' => $request->nomor,
+                    'perihal' => $request->perihal,
+                    'status' => 'Belum disetujui',
+                    'created_at' => $request->tanggal
+                ]
+            );
+
+            $form = $request->volume;
+
+            for ($i = 0; $i < count($form); $i++) {
+                //    $s = Barang::find($request->barang[$i]);
+                $volume = preg_replace('/[^\d]/', '', $request->volume[$i]);
+                DetailPermintaan::create([
+                    'id_permintaan' => Permintaan::get()->last()->id,
+                    'id_barang' => $request->barang[$i],
+                    'jumlah' => $volume,
+                ]);
+            }
+            return redirect()->route('permintaan.index')->with('success', 'Berhasil menambahkan permintaan');
         }
-
-        return redirect()->route('permintaan.index')->with('success', 'Berhasil menambahkan permintaan');
     }
 
     /**
@@ -116,7 +162,7 @@ class PermintaanController extends Controller
 
     public function ubah($id)
     {
-        $pejabat = PejabatBarang::all();
+        $pejabat = PejabatBarang::where('aktif', 1)->get();
         $barang = Barang::all();
         $permintaan = Permintaan::findOrFail($id);
         $detail_permintaan = DetailPermintaan::where('id_permintaan', $id)->get();

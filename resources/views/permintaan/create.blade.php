@@ -69,15 +69,25 @@
                     <label for="Perihal">Perihal</label>
                     <input type="text" class="form-control" id="perihal" name="perihal" value="{{ old('perihal') }}">
                 </div>
-
-
             </div>
         </div>
+
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Tambah barang</h6>
             </div>
             <div class="card-body">
+                @if (Auth::user()->status == "bidang")
+                <div class="form-group">
+                    <label for="nota">Barang yang bisa diambil dari nota pengiriman</label>
+                    <select class="custom-select" id="nota" name="nota">
+                        <option></option>
+                        @foreach ($nota as $item)
+                        <option value="{{$item->id}}">{{$item->no_nota}} (tanggal dibuat : {{date('Y-m-d', strtotime($item->created_at))}})</option>
+                        @endforeach
+                    </select>
+                </div>
+                @else
                 <div class="input-group increment mb-2">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="">Barang</span>
@@ -97,6 +107,7 @@
                         <button class="btn btn-primary btn-add" type="button"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
+                @endif
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit">Simpan</button>
                 </div>

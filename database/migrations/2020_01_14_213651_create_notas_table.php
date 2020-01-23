@@ -22,9 +22,11 @@ class CreateNotasTable extends Migration
             $table->string('program');
             $table->mediumText('kegiatan')->nullable();
             $table->unsignedBigInteger('penanda_tangan');
+            $table->unsignedBigInteger('id_bidang');
             $table->timestamps();
 
             $table->foreign('penanda_tangan')->references('id')->on('pejabat_barangs');
+            $table->foreign('id_bidang')->references('id')->on('bidangs');
         });
     }
 

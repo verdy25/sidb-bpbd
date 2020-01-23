@@ -9,6 +9,7 @@ use App\PejabatBarang;
 use App\SHBelanja;
 use App\Http\Controllers\Helpers as help;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class NotaController extends Controller
@@ -20,7 +21,12 @@ class NotaController extends Controller
      */
     public function index()
     {
-        $notas = Nota::orderBy('id', 'DESC')->get();;
+        $notas = [];
+        if (Auth::user()->status == 'bidang') {
+            $notas = Nota::where('id_bidang', Auth::user()->id_bidang)->orderby('id', 'DESC')->get();
+        } else {
+            $notas = Nota::orderBy('id', 'DESC')->get();
+        }
         return view('nota.index', compact('notas'));
     }
 
@@ -32,7 +38,7 @@ class NotaController extends Controller
     public function create()
     {
         $shb = SHBelanja::all();
-        $pejabat = PejabatBarang::all();
+        $pejabat = PejabatBarang::where('aktif', 1)->get();
         return view('nota.create', compact('shb', 'pejabat'));
     }
 
@@ -70,6 +76,7 @@ class NotaController extends Controller
             'program' => $request->program,
             'kegiatan' => $request->kegiatan,
             'penanda_tangan' => $request->penanda_tangan,
+            'id_bidang' => Auth::user()->id_bidang,
             'created_at' => $request->tanggal
         ]);
 
@@ -119,7 +126,7 @@ class NotaController extends Controller
     {
         $nota = Nota::findOrFail($id);
         $details = DetailNota::where('nota_id', $id)->get();
-        $pejabat = PejabatBarang::all();
+        $pejabat = PejabatBarang::where('aktif', 1)->get();
         $total = 0;
         $jumlah = [];
         foreach ($details as $key => $value) {

@@ -20,10 +20,12 @@ class CreatePermintaansTable extends Migration
             $table->string('nomor');
             $table->string('perihal'); 
             $table->string('status');
+            $table->unsignedBigInteger('id_nota')->nullable();
             $table->timestamps();
 
             $table->foreign('kepada')->references('id')->on('pejabat_barangs');
             $table->foreign('pemohon')->references('id')->on('pejabat_barangs');
+            $table->foreign('id_nota')->references('id')->on('notas');
         });
     }
 

@@ -15,4 +15,8 @@ class Nota extends Model
     public function penerima(){
         return $this->belongsTo('App\PejabatBarang', 'penanda_tangan');
     }
+
+    public function bidang(){
+        return $this->belongsTo('App\Bidang', 'id_bidang');
+    }
 }

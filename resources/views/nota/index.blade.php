@@ -32,6 +32,7 @@
           <thead>
             <tr>
               <th>Tanggal</th>
+              <th>Bidang</th>
               <th>Nomor Nota</th>
               <th>Nama PT/CV</th>
               <th>Program</th>
@@ -43,19 +44,17 @@
             @foreach ($notas as $nota)
             <tr>
               <td>{{date('d F Y', strtotime($nota->created_at))}}</td>
+              <td>{{$nota->bidang->nama}}</td>
               <td>{{$nota->no_nota}}</td>
               <td><a href="" data-target="#pihak_ketiga" data-toggle="modal">{{$nota->pihak_ketiga}}
                 </a></td>
               <td><a href="" data-target="#program" data-toggle="modal">{{$nota->program}}
                 </a></td>
               <td>{{$nota->penerima->nama}}</td>
-              <td><a href="{{route('nota.show', $nota->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+              <td><a href="{{route('nota.show', $nota->id)}}" class="btn btn-sm btn-primary"><i
+                    class="fas fa-eye"></i></a>
                 @if (Auth::user()->status != "bidang")
-                <form action="{{route('nota.destroy', $nota->id)}}" method="POST" class="d-inline">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                </form>  
+                  <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapus_nota"><i class="fas fa-trash"></i></button>
                 @endif
               </td>
               <!-- Modal -->
@@ -110,6 +109,32 @@
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal Delete-->
+              <div class="modal fade" id="hapus_nota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Hapus Nota Pengiriman</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                      <div class="modal-body">
+                        <p>Yakin menghapus nota pengiriman?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <form action="{{route('nota.destroy', $nota->id)}}" method="POST" class="d-inline">
+                          @csrf
+                          @method('delete')
+                          <button type="submit" class="btn btn-danger">Yakin</button>
+                        </form>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>

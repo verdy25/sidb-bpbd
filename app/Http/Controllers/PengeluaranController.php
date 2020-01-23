@@ -23,28 +23,28 @@ class PengeluaranController extends Controller
     public function sppb($id)
     {
         $pengeluaran = Pengeluaran::findOrFail($id);
-        $pejabats = PejabatBarang::all();
+        $pejabats = PejabatBarang::where('aktif', 1)->get();
         return view('pengeluaran.sppb.edit', compact('pejabats', 'pengeluaran'));
     }
 
     public function bpbg($id)
     {
         $pengeluaran = Pengeluaran::findOrFail($id);
-        $pejabats = PejabatBarang::all();
+        $pejabats = PejabatBarang::where('aktif', 1)->get();
         return view('pengeluaran.bpbg.edit', compact('pejabats', 'pengeluaran'));
     }
 
     public function sppb_create($id)
     {
         $pengeluaran = Pengeluaran::findOrFail($id);
-        $pejabats = PejabatBarang::all();
+        $pejabats = PejabatBarang::where('aktif', 1)->get();
         return view('pengeluaran.sppb.create', compact('pejabats', 'pengeluaran'));
     }
 
     public function bpbg_create($id)
     {
         $pengeluaran = Pengeluaran::findOrFail($id);
-        $pejabats = PejabatBarang::all();
+        $pejabats = PejabatBarang::where('aktif', 1)->get();
         return view('pengeluaran.bpbg.create', compact('pejabats', 'pengeluaran'));
     }
 
@@ -98,7 +98,7 @@ class PengeluaranController extends Controller
             ]);
         }
 
-        return redirect()->route('pengeluaran.index')->with('success', 'Bukti Penngambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
+        return redirect()->route('pengeluaran.index')->with('success', 'Bukti Pengambilan Barang dari Gudang pada permintaan ' . $pengeluaran->permintaan->nomor . ' telah dibuat');
     }
 
     public function sppb_update(Request $request, $id)

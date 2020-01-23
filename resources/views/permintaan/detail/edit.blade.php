@@ -27,7 +27,7 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="kepada">Kepada</label>
+                        <label for="kepada">Kepada (Pengguna Barang)</label>
                         <select class="custom-select" id="kepada" name="kepada">
                             <option value="{{$permintaan->kepada}}">{{$permintaan->kepada_user->nama}}</option>
                             @foreach ($pejabat as $p)
@@ -41,7 +41,7 @@
                         <label for="pemohon">Pemohon</label>
                         <select class="custom-select" id="pemohon" name="pemohon">
                             <option value="{{$permintaan->pemohon}}">{{$permintaan->pemohon_user->nama}}</option>
-                            @foreach ($pejabat_bidang as $p)
+                            @foreach ($pejabat as $p)
                             @if ($permintaan->pemohon != $p->id)
                             <option value="{{$p->id}}">{{$p->nama}}</option>
                             @endif

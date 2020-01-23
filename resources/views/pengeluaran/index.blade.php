@@ -67,8 +67,9 @@
               </td>
               <td>
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                  <div class="btn-group" role="group">
-                    @if (Auth::user()->status != "bidang")
+                  @if (Auth::user()->status != "bidang")
+                  @if ($p->nomor_ambil == null || $p->nomor_keluar == null)
+                  <div class="btn-group" role="group">                    
                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Buat
                     </button>
@@ -81,6 +82,7 @@
                       @endif
                     </div>
                   </div>
+                  @endif
                   @endif
                   <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
